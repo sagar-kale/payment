@@ -32,6 +32,12 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>com.instamojo</groupId>
+            <artifactId>instamojo-java</artifactId>
+            <version>1.0.3</version>
+        </dependency>
+
     </dependencies>
 
     <properties>
