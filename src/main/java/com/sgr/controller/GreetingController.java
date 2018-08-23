@@ -1,4 +1,4 @@
-package com.sgr;
+package com.sgr.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
