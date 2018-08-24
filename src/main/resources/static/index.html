@@ -1,10 +1,16 @@
 <!DOCTYPE HTML>
 <html>
-<head> 
-    <title>Getting Started: Serving Web Content</title> 
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<head>
+    <title>Getting Started: Serving Web Content</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 </head>
 <body>
-    <p>Get your greeting <a href="/greeting">here</a></p>
+<p>Get your greeting <a href="/greeting">here</a></p>
+<form action="/greeting" method="get">
+    Order ID : <input name="orderId"/> <br/>
+    Name : <input name="name"/> <br/>
+    <input type="submit" value="place order">
+
+</form>
 </body>
 </html>

@@ -12,6 +12,7 @@ import com.instamojo.wrapper.response.CreatePaymentOrderResponse;
 import com.instamojo.wrapper.response.CreateRefundResponse;
 import com.instamojo.wrapper.response.PaymentOrderDetailsResponse;
 import com.instamojo.wrapper.response.PaymentOrderListResponse;
+import com.sgr.util.ConfigConstants;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -28,21 +29,22 @@ public class InstamojoExample {
 
         PaymentOrder order = new PaymentOrder();
 
+        order.setId("12345678909h");
         order.setName("John Smith");
-        order.setEmail("john.smith@gmail.com");
-        order.setPhone("12345678790");
+        order.setEmail("sagarrk.kale@gmail.com");
+        order.setPhone("9561609535");
         order.setCurrency("INR");
         order.setAmount(9D);
         order.setDescription("This is a test transaction.");
         order.setRedirectUrl("http://www.someexample.com");
         order.setWebhookUrl("http://www.someurl.com/");
-        order.setTransactionId("dxg234");
+        order.setTransactionId("dxg23476");
 
         Instamojo api = null;
 
         try {
             // gets the reference to the instamojo api
-            api = InstamojoImpl.getApi("[CLIENT_ID]", "[CLIENT_SECRET]", "[API_ENDPOINT]", "[AUTH_ENDPOINT]");
+            api = InstamojoImpl.getApi(ConfigConstants.TEST_CLIENT_ID, ConfigConstants.TEST_CLIENT_SECRET, ConfigConstants.INSTAMOJO_TEST_API_ENDPOINT, ConfigConstants.INSTAMOJO_TEST_AUTH_ENDPOINT);
         } catch (ConnectionException e) {
             LOGGER.log(Level.SEVERE, e.toString(), e);
         }
@@ -53,6 +55,9 @@ public class InstamojoExample {
             try {
                 CreatePaymentOrderResponse createPaymentOrderResponse = api.createNewPaymentOrder(order);
                 // print the status of the payment order.
+                System.out.println("Payment link #1 ::: " + createPaymentOrderResponse.getPaymentOptions().getPaymentUrl());
+                System.out.println("Payment link #2 ::: " + createPaymentOrderResponse.getPaymentOrder().getRedirectUrl());
+                System.out.println("Payment link #3 ::: " + createPaymentOrderResponse.getPaymentOrder().getWebhookUrl());
                 System.out.println(createPaymentOrderResponse.getPaymentOrder().getStatus());
             } catch (InvalidPaymentOrderException e) {
                 LOGGER.log(Level.SEVERE, e.toString(), e);
@@ -102,8 +107,10 @@ public class InstamojoExample {
          * Get details of payment order when order id is given
          */
 
+/*
+
         try {
-            PaymentOrderDetailsResponse paymentOrderDetailsResponse = api.getPaymentOrderDetails("[PAYMENT_ORDER_ID]");
+            PaymentOrderDetailsResponse paymentOrderDetailsResponse = api.getPaymentOrderDetails(order.getId());
 
             if (paymentOrderDetailsResponse.getId() != null) {
                 // print the status of the payment order.
@@ -115,13 +122,16 @@ public class InstamojoExample {
             LOGGER.log(Level.SEVERE, e.toString(), e);
         }
 
-        /*
+
+        */
+/*
          * Get details of payment order when transaction id is given
-         */
+         *//*
+
 
         try {
-            PaymentOrderDetailsResponse paymentOrderDetailsResponse = api.getPaymentOrderDetailsByTransactionId("[TRANSACTION_ID]");
-
+            PaymentOrderDetailsResponse paymentOrderDetailsResponse = api.getPaymentOrderDetailsByTransactionId(order.getTransactionId());
+            ;
             if (paymentOrderDetailsResponse.getId() != null) {
                 // print the status of the payment order.
                 System.out.println(paymentOrderDetailsResponse.getStatus());
@@ -132,9 +142,11 @@ public class InstamojoExample {
             LOGGER.log(Level.SEVERE, e.toString(), e);
         }
 
-        /*
+        */
+/*
          * Get list of all payment orders
-         */
+         *//*
+
 
         try {
             PaymentOrderFilter paymentOrderFilter = new PaymentOrderFilter();
@@ -150,14 +162,15 @@ public class InstamojoExample {
         } catch (ConnectionException e) {
             LOGGER.log(Level.SEVERE, e.toString(), e);
         }
+*/
 
 
 		/*
 		 Create a new refund **************************************
 		 */
-
+/*
         Refund refund = new Refund();
-        refund.setPaymentId("[PaymentId]");
+        refund.setPaymentId(order.getId());
         refund.setStatus("refunded");
         refund.setType("RFD");
         refund.setBody("This is a test refund.");
@@ -194,6 +207,6 @@ public class InstamojoExample {
             if (refund.isRefundAmountInvalid()) {
                 System.out.println("Refund amount is invalid.");
             }
-        }
+        }*/
     }
 }

@@ -1,1 +1,6 @@
 server.port: 8080
+logging:
+  level:
+    org.springframework.web: DEBUG
+    org.hibernate: ERROR
+    org.apache.http: DEBUG

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Status Of Order</title>
+    <style>
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+    width: 100%;
+    border: 1px solid #ddd;
+}
+
+th, td {
+    text-align: left;
+    padding: 16px;
+}
+
+tr:nth-child(even) {
+    background-color: #f2f2f2
+}
+
+    </style>
+</head>
+<body>
+<h2>Payment Order Status</h2>
+<p>Please find below status of your order</p>
+    <table>
+        <tbody>
+        <tr>
+            <th>ID</th>
+            <th>Transaction Id</th>
+            <th>Amount</th>
+            <th>Redirect URL</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>Status</th>
+        </tr>
+        <tr th:each="response : ${orderStatus}">
+            <td th:text="${response.id}"/>
+            <td th:text="${response.transactionId}"/>
+            <td th:text="${response.amount+ ' ' + response.currency}"/>
+            <td th:text="${response.redirectUrl}"/>
+            <td th:text="${response.name}"/>
+            <td th:text="${response.email}"/>
+            <td th:text="${response.phone}"/>
+            <td th:text="${response.status}"/>
+        </tr>
+        </tbody>
+    </table>
+</body>
+</html>
