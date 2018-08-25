@@ -12,9 +12,11 @@ import org.springframework.ui.Model;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Map;
 
 @Controller
 @CrossOrigin
@@ -54,10 +56,17 @@ public class GreetingController {
         return "result";
     }
 
-    @PostMapping(value = "/webhook", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-    public String webhookHandle(MultiValueMap<String, String> multiValueMap, Model model) {
-        System.out.println(multiValueMap);
-        return "result";
+    @PostMapping(value = "/webhook")
+    public void webhookHandle(@RequestBody MultiValueMap<String, String> webhook, HttpServletRequest request, HttpServletResponse response) {
+        System.out.println("Webhook Entry :::: " + webhook);
+
+        System.out.println(request.getParameterMap().toString());
+        response.setStatus(200);
+        try {
+            response.getWriter().println("Done");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 }

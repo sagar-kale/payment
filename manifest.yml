@@ -1,6 +1,7 @@
 ---
 applications:
 - name: cf-payment
-  memory: 500M
+  memory: 1024M
+  path : target\payment-gateways-0.1.0.jar
   instances: 1
   random-route: true
