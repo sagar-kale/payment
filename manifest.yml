@@ -1,0 +1,6 @@
+---
+applications:
+- name: cf-payment
+  memory: 500M
+  instances: 1
+  random-route: true
