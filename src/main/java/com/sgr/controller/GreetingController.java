@@ -23,6 +23,11 @@ public class GreetingController {
     InstaMojoService instaMojoService;
 
     @GetMapping("/greeting")
+    public String view(Model model) {
+        return "view";
+    }
+
+    @GetMapping("/order")
     public void greeting(@RequestParam(name = "orderId") String id, @RequestParam(name = "name") String name, HttpServletResponse response) {
         PrintWriter writer = null;
         response.setContentType("text/html");
