@@ -1,12 +1,11 @@
 package com.sgr.controller;
 
+import com.instamojo.wrapper.model.Payment;
 import com.instamojo.wrapper.model.PaymentOrder;
 import com.instamojo.wrapper.response.PaymentOrderDetailsResponse;
 import com.sgr.api.InstaMojoService;
 import com.sgr.builder.PaymentOrderBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Configurable;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.MultiValueMap;
@@ -16,7 +15,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Map;
 
 @Controller
 @CrossOrigin
@@ -53,6 +51,15 @@ public class GreetingController {
         PaymentOrderDetailsResponse paymentOrderDetailsResponse = instaMojoService.retrievePaymentOrderDetailsByTransactionId(transactionId);
         model.addAttribute("orderStatus", paymentOrderDetailsResponse);
         System.out.println("ID ::::: " + paymentOrderDetailsResponse.getId());
+        Payment pay = new Payment();
+        for (Payment payment : paymentOrderDetailsResponse.getPayments()) {
+            System.out.println("Payment ::: " + payment);
+            pay.setId(payment.getId());
+            pay.setStatus(payment.getStatus());
+        }
+        model.addAttribute("payment", pay);
+
+
         return "result";
     }
 
