@@ -19,16 +19,18 @@ public class UserRegistration {
     private String lastName;
     private String email;
     private String password;
+    private String phone;
 
     public UserRegistration() {
     }
 
-    public UserRegistration(String userName, String firstName, String lastName, String email, String password) {
+    public UserRegistration(String userName, String firstName, String lastName, String email, String password, String phone) {
         this.userName = userName;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.password = password;
+        this.phone = phone;
     }
 
     public String getId() {
@@ -79,6 +81,14 @@ public class UserRegistration {
         this.password = password;
     }
 
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
     @Override
     public String toString() {
         return "UserRegistration{" +
@@ -88,6 +98,7 @@ public class UserRegistration {
                 ", lastName='" + lastName + '\'' +
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
+                ", phone='" + phone + '\'' +
                 '}';
     }
 }

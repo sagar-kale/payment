@@ -1,18 +1,23 @@
 package com.sgr.controller;
 
+import com.sgr.domain.RandomIdGenerator;
 import com.sgr.domain.UserRegistration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.concurrent.atomic.AtomicLong;
 
 @RestController
+@CrossOrigin
 @RequestMapping(value = "/users")
 public class UserRegistrationController {
     private static final Logger logger = LoggerFactory.getLogger(UserRegistrationController.class);
+    private final AtomicLong counter = new AtomicLong();
     private CrudRepository<UserRegistration, String> repository;
 
     @Autowired
@@ -25,13 +30,15 @@ public class UserRegistrationController {
         return repository.findAll();
     }
 
-    @RequestMapping(method = RequestMethod.PUT)
-    public UserRegistration add(@RequestBody @Valid UserRegistration userRegistration) {
+    @RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+    public UserRegistration add(UserRegistration userRegistration) {
         logger.info("Adding User " + userRegistration.getId());
+        logger.info("User " + userRegistration);
+        userRegistration.setUserName("Test_" + new RandomIdGenerator().generateId());
         return repository.save(userRegistration);
     }
 
-    @RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(method = RequestMethod.PUT)
     public UserRegistration update(@RequestBody @Valid UserRegistration userRegistration) {
         logger.info("Updating User " + userRegistration.getId());
         return repository.save(userRegistration);
