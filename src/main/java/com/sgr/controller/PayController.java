@@ -3,7 +3,7 @@ package com.sgr.controller;
 import com.instamojo.wrapper.model.Payment;
 import com.instamojo.wrapper.model.PaymentOrder;
 import com.instamojo.wrapper.response.PaymentOrderDetailsResponse;
-import com.sgr.api.InstaMojoService;
+import com.sgr.service.InstaMojoService;
 import com.sgr.builder.PaymentOrderBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,9 +18,9 @@ import java.io.PrintWriter;
 
 @Controller
 @CrossOrigin
-public class GreetingController {
+public class PayController {
     @Autowired
-    InstaMojoService instaMojoService;
+    private InstaMojoService instaMojoService;
 
     @GetMapping("/greeting")
     public String view(Model model) {

@@ -1,4 +1,4 @@
-package com.sgr.api;
+package com.sgr.service;
 
 import com.instamojo.wrapper.api.Instamojo;
 import com.instamojo.wrapper.exception.ConnectionException;

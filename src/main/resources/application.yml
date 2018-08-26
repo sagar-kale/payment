@@ -2,5 +2,51 @@ server.port: 8080
 logging:
   level:
     org.springframework.web: DEBUG
-    org.hibernate: ERROR
+    org.hibernate: DEBUG
     org.apache.http: DEBUG
+
+
+spring:
+  jpa:
+    properties:
+      hibernate:
+        format_sql: true
+        use_sql_comments: true
+        show_sql: true
+        type: trace
+    generate-ddl: true
+    show-sql: true
+    hibernate:
+      ddl-auto: validate
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
+---
+spring:
+  profiles: mysql
+  datasource:
+    url: "jdbc:mysql://localhost:3306/payment"
+    driver-class-name: com.mysql.jdbc.Driver
+    username: root
+    password: root
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL55Dialect
+
+---
+spring:
+  profiles: postgres
+  datasource:
+    url: "postgres://https://tlhjpzrd:yIIfrJfypN3nvNVsmkwf0arULefly-e4@elmer.db.elephantsql.com:5432/tlhjpzrd"
+    driver-class-name: org.postgresql.Driver
+    username: tlhjpzrd
+    password: yIIfrJfypN3nvNVsmkwf0arULefly-e4
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.ProgressDialect
