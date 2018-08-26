@@ -7,5 +7,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 @Profile("mongodb")
-public interface MongoAlbumRepository extends MongoRepository<UserRegistration, String> {
+public interface MongoUserRegistrationRepository extends MongoRepository<UserRegistration, String> {
 }

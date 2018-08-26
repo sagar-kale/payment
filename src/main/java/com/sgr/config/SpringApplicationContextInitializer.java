@@ -4,8 +4,6 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.boot.autoconfigure.data.mongo.MongoDataAutoConfiguration;
 import org.springframework.boot.autoconfigure.data.mongo.MongoRepositoriesAutoConfiguration;
-import org.springframework.boot.autoconfigure.data.redis.RedisAutoConfiguration;
-import org.springframework.boot.autoconfigure.data.redis.RedisRepositoriesAutoConfiguration;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.boot.autoconfigure.mongo.MongoAutoConfiguration;
 import org.springframework.cloud.Cloud;
@@ -30,13 +28,12 @@ public class SpringApplicationContextInitializer implements ApplicationContextIn
 
     private static final Map<Class<? extends ServiceInfo>, String> serviceTypeToProfileName = new HashMap<>();
     private static final List<String> validLocalProfiles =
-            Arrays.asList("mysql", "postgres", "sqlserver", "oracle", "mongodb", "redis");
+            Arrays.asList("mysql", "postgres", "sqlserver", "oracle", "mongodb");
 
     static {
         serviceTypeToProfileName.put(MongoServiceInfo.class, "mongodb");
         serviceTypeToProfileName.put(PostgresqlServiceInfo.class, "postgres");
         serviceTypeToProfileName.put(MysqlServiceInfo.class, "mysql");
-        serviceTypeToProfileName.put(RedisServiceInfo.class, "redis");
         serviceTypeToProfileName.put(OracleServiceInfo.class, "oracle");
         serviceTypeToProfileName.put(SqlServerServiceInfo.class, "sqlserver");
     }
@@ -109,15 +106,10 @@ public class SpringApplicationContextInitializer implements ApplicationContextIn
 
     private void excludeAutoConfiguration(ConfigurableEnvironment environment) {
         List<String> exclude = new ArrayList<>();
-        if (environment.acceptsProfiles("redis")) {
+        if (environment.acceptsProfiles("mongodb")) {
             excludeDataSourceAutoConfiguration(exclude);
-            excludeMongoAutoConfiguration(exclude);
-        } else if (environment.acceptsProfiles("mongodb")) {
-            excludeDataSourceAutoConfiguration(exclude);
-            excludeRedisAutoConfiguration(exclude);
         } else {
             excludeMongoAutoConfiguration(exclude);
-            excludeRedisAutoConfiguration(exclude);
         }
 
         Map<String, Object> properties = Collections.singletonMap("spring.autoconfigure.exclude",
@@ -137,13 +129,6 @@ public class SpringApplicationContextInitializer implements ApplicationContextIn
                 MongoAutoConfiguration.class.getName(),
                 MongoDataAutoConfiguration.class.getName(),
                 MongoRepositoriesAutoConfiguration.class.getName()
-        ));
-    }
-
-    private void excludeRedisAutoConfiguration(List<String> exclude) {
-        exclude.addAll(Arrays.asList(
-                RedisAutoConfiguration.class.getName(),
-                RedisRepositoriesAutoConfiguration.class.getName()
         ));
     }
 }
