@@ -5,6 +5,7 @@ logging:
     org.hibernate: DEBUG
     org.apache.http: DEBUG
 
+spring.messages.basename: validation
 
 spring:
   jpa:

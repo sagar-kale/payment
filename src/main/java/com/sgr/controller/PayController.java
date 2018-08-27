@@ -17,14 +17,13 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 @Controller
-@CrossOrigin
 public class PayController {
     @Autowired
     private InstaMojoService instaMojoService;
 
     @GetMapping("/greeting")
     public String view(Model model) {
-        return "view";
+        return "order";
     }
 
     @GetMapping("/order")

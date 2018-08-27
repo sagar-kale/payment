@@ -2,30 +2,29 @@ package com.sgr.domain;
 
 import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 
-@Entity
-public class UserRegistration {
+@Entity(name = "user_details")
+public class User {
     @Id
     @Column(length = 40)
     @GeneratedValue(generator = "randomId")
     @GenericGenerator(name = "randomId", strategy = "com.sgr.domain.RandomIdGenerator")
     private String id;
-    private String userName;
+    private String username;
     private String firstName;
     private String lastName;
     private String email;
     private String password;
+    @Transient
+    private String passwordConfirm;
     private String phone;
 
-    public UserRegistration() {
+    public User() {
     }
 
-    public UserRegistration(String userName, String firstName, String lastName, String email, String password, String phone) {
-        this.userName = userName;
+    public User(String username, String firstName, String lastName, String email, String password, String phone) {
+        this.username = username;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
@@ -41,12 +40,12 @@ public class UserRegistration {
         this.id = id;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getUsername() {
+        return username;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getFirstName() {
@@ -89,15 +88,24 @@ public class UserRegistration {
         this.phone = phone;
     }
 
+    public String getPasswordConfirm() {
+        return passwordConfirm;
+    }
+
+    public void setPasswordConfirm(String passwordConfirm) {
+        this.passwordConfirm = passwordConfirm;
+    }
+
     @Override
     public String toString() {
-        return "UserRegistration{" +
+        return "User{" +
                 "id='" + id + '\'' +
-                ", userName='" + userName + '\'' +
+                ", username='" + username + '\'' +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
+                ", passwordConfirm='" + passwordConfirm + '\'' +
                 ", phone='" + phone + '\'' +
                 '}';
     }

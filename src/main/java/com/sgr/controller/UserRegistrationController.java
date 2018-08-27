@@ -1,11 +1,11 @@
 package com.sgr.controller;
 
 import com.sgr.domain.RandomIdGenerator;
-import com.sgr.domain.UserRegistration;
+import com.sgr.domain.User;
+import com.sgr.repositories.jpa.JpaUserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.CrudRepository;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,34 +18,30 @@ import java.util.concurrent.atomic.AtomicLong;
 public class UserRegistrationController {
     private static final Logger logger = LoggerFactory.getLogger(UserRegistrationController.class);
     private final AtomicLong counter = new AtomicLong();
-    private CrudRepository<UserRegistration, String> repository;
-
     @Autowired
-    public UserRegistrationController(CrudRepository<UserRegistration, String> repository) {
-        this.repository = repository;
-    }
+    private JpaUserRepository repository;
 
     @RequestMapping(method = RequestMethod.GET)
-    public Iterable<UserRegistration> albums() {
+    public Iterable<User> albums() {
         return repository.findAll();
     }
 
     @RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-    public UserRegistration add(UserRegistration userRegistration) {
-        logger.info("Adding User " + userRegistration.getId());
-        logger.info("User " + userRegistration);
-        userRegistration.setUserName("Test_" + new RandomIdGenerator().generateId());
-        return repository.save(userRegistration);
+    public User add(User user) {
+        logger.info("Adding User " + user.getId());
+        logger.info("User " + user);
+        user.setUsername("Test_" + new RandomIdGenerator().generateId());
+        return repository.save(user);
     }
 
     @RequestMapping(method = RequestMethod.PUT)
-    public UserRegistration update(@RequestBody @Valid UserRegistration userRegistration) {
-        logger.info("Updating User " + userRegistration.getId());
-        return repository.save(userRegistration);
+    public User update(@RequestBody @Valid User user) {
+        logger.info("Updating User " + user.getId());
+        return repository.save(user);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public UserRegistration getById(@PathVariable String id) {
+    public User getById(@PathVariable String id) {
         logger.info("Getting User " + id);
         return repository.findById(id).orElse(null);
     }
