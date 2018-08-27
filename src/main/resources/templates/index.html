@@ -42,7 +42,7 @@
                 <!-- Links -->
                 <ul class="navbar-nav mr-auto smooth-scroll">
                     <li class="nav-item">
-                        <a class="nav-link" href="login.html">Login</a>
+                        <a class="nav-link" th:href="@{/login}">Login</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#register">Register</a>
@@ -116,9 +116,11 @@
                 <div class="col-lg-4 col-md-6 mb-4">
 
                     <div class="view overlay z-depth-1-half">
-                        <h4 class="my-4 font-weight-bold">Registration tips</h4>
-                        <p class="grey-text">Provide Phone and Email</p>
-                        <p class="grey-text">Password - At least 8 characters and 1 digit</p>
+                        <h4 class="my-4 font-weight-bold">Registration Validation Error</h4>
+                        <!--<div th:errors="${user.*}">...</div>-->
+                        <ul th:if="${#fields.hasErrors('${user.*}')}" class="text-left">
+                            <li th:each="err : ${#fields.errors('${user.*}')}" th:text="${err}">Input is incorrect</li>
+                        </ul>
                         <div class="mask rgba-white-slight"></div>
                     </div>
 
@@ -129,36 +131,42 @@
                 <div class="col-lg-8 col-md-6 mb-4">
                     <div class="view overlay z-depth-1-half">
                         <!-- Default form register -->
-                        <form class="text-center border border-light p-5" method="post" th:action="@{/register}">
-
-                            <p class="h4 mb-4">Registration</p>
+                        <form action="#" th:action="@{/register}" th:object="${user}"
+                              class="text-center border border-light p-5" method="post"><p class="h4 mb-4">
+                            Registration</p>
 
                             <div class="form-row mb-4">
                                 <div class="col">
                                     <!-- First name -->
-                                    <input type="text" name="firstName" id="defaultRegisterFormFirstName"
-                                           class="form-control" placeholder="First name">
+                                    <input type="text" th:field="*{firstName}" name="firstName"
+                                           id="defaultRegisterFormFirstName"
+                                           class="form-control" th:errorclass="fieldError" placeholder="First name"/>
+                                    <!--<p th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}">Invalid</p>-->
                                 </div>
                                 <div class="col">
                                     <!-- Last name -->
-                                    <input type="text" name="lastName" id="defaultRegisterFormLastName"
+                                    <input type="text" th:field="*{lastName}" name="lastName"
+                                           id="defaultRegisterFormLastName"
                                            class="form-control" placeholder="Last name">
-                                </div>
+                                  </div>
                             </div>
 
                             <!-- E-mail -->
-                            <input type="email" name="email" id="defaultRegisterFormEmail" class="form-control mb-4"
-                                   placeholder="E-mail">
+                            <input type="email" th:field="*{email}" name="email" id="defaultRegisterFormEmail"
+                                   class="form-control mb-4"
+                                   placeholder="E-mail" autofocus="autofocus" th:errorclass="fieldError">
 
                             <!-- Password -->
-                            <input type="password" name="password" id="defaultRegisterFormPassword" class="form-control"
+                            <input type="password" th:field="*{password}" name="password"
+                                   id="defaultRegisterFormPassword" class="form-control"
                                    placeholder="Password" aria-describedby="defaultRegisterFormPasswordHelpBlock">
                             <small id="defaultRegisterFormPasswordHelpBlock" class="form-text text-muted mb-4">
                                 At least 8 characters and 1 digit
                             </small>
 
                             <!-- Phone number -->
-                            <input type="text" name="phone" id="defaultRegisterPhonePassword" class="form-control"
+                            <input type="text" name="phone" th:field="*{phone}" id="defaultRegisterPhonePassword"
+                                   class="form-control"
                                    placeholder="Phone number" aria-describedby="defaultRegisterFormPhoneHelpBlock">
                             <small id="defaultRegisterFormPhoneHelpBlock" class="form-text text-muted mb-4">
                                 Optional - for two step authentication
@@ -469,6 +477,7 @@
 
 
 
+
 </script>
 
 <!-- Carousel options -->
@@ -482,6 +491,7 @@
         scrollTop: $('#register').offset().top
     }, 'slow');
 });
+
 
 
 

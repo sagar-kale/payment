@@ -23,6 +23,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Transactional(readOnly = true)
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = jpaUserRepository.findByUsername(username);
+        if (user == null)
+            throw new UsernameNotFoundException("Username not found");
 
         Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
         grantedAuthorities.add(new SimpleGrantedAuthority("USER"));

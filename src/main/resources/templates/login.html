@@ -11,10 +11,18 @@
 <div th:if="${param.logout}">
     You have been logged out.
 </div>
-<form th:action="@{/login}" method="post">
-    <div><label> User Name : <input type="text" name="username"/> </label></div>
-    <div><label> Password: <input type="password" name="password"/> </label></div>
-    <div><input type="submit" value="Sign In"/></div>
-</form>
+
+<div sec:authorize="isAuthenticated()">
+    You already logged in <a th:href="@{/home}">HOME</a>
+</div>
+
+<div sec:authorize="isAnonymous()">
+    <form th:action="@{/login}" method="post">
+        <div><label> User Name : <input type="text" name="username"/> </label></div>
+        <div><label> Password: <input type="password" name="password"/> </label></div>
+        <div><input type="submit" value="Sign In"/></div>
+        <a th:href="@{/register}">Click Here Register</a>
+    </form>
+</div>
 </body>
 </html>

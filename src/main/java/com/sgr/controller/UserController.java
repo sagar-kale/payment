@@ -11,8 +11,12 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
+import javax.validation.Valid;
 
 @Controller
 public class UserController {
@@ -26,32 +30,39 @@ public class UserController {
     @Autowired
     private UserValidator userValidator;
 
-    @RequestMapping(value = "/registration", method = RequestMethod.GET)
-    public String registration(Model model) {
-        model.addAttribute("userForm", new User());
+    @GetMapping("/home")
+    public String homeget() {
+        return "hello";
+    }
 
-        return "registration";
+    @PostMapping("/home")
+    public String home() {
+        return "hello";
+    }
+
+    @RequestMapping(value = "/register", method = RequestMethod.GET)
+    public String showForm(User user) {
+        return "index";
     }
 
     //@RequestMapping(value = "/registration", method = RequestMethod.POST)
     @RequestMapping(value = "/register", method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-    public String registration(User userForm, BindingResult bindingResult, Model model) {
+    public String registration(@Valid User user, BindingResult bindingResult, Model model) {
 
-        logger.info("Adding User " + userForm.getId());
-        logger.info("User::: " + userForm);
-        userForm.setUsername(userForm.getEmail());
-        userValidator.validate(userForm, bindingResult);
-        userForm.setPasswordConfirm(userForm.getPassword());
+        logger.info("Adding User " + user.getId());
+        logger.info("User::: " + user);
+        user.setUsername(user.getEmail());
+        userValidator.validate(user, bindingResult);
+        user.setPasswordConfirm(user.getPassword());
 
         if (bindingResult.hasErrors()) {
-            return "/";
+            return "index";
         }
 
-        userService.save(userForm);
-
-        securityService.autologin(userForm.getUsername(), userForm.getPasswordConfirm());
-        logger.info("Password ::: " + userForm.getPassword());
-        logger.info("Password plain ::: " + userForm.getPasswordConfirm());
+        userService.save(user);
+        securityService.autologin(user.getUsername(), user.getPasswordConfirm());
+        logger.info("Password ::: " + user.getPassword());
+        logger.info("Password plain ::: " + user.getPasswordConfirm());
         return "hello";
     }
 

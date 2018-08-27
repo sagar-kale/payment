@@ -21,7 +21,7 @@ public class PayController {
     @Autowired
     private InstaMojoService instaMojoService;
 
-    @GetMapping("/greeting")
+    @GetMapping("/orderpage")
     public String view(Model model) {
         return "order";
     }
