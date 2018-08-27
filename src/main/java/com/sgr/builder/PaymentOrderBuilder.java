@@ -9,14 +9,14 @@ import java.util.UUID;
  */
 public class PaymentOrderBuilder {
 
-    private static final String PAYMENT_ORDER_NAME = "Sagar Kale";
-    private static final String PAYMENT_ORDER_EMAIL = "sagarrk.kale@gmail.com";
-    private static final String PAYMENT_ORDER_PHONE = "9561609535";
-    private static final String PAYMENT_ORDER_CURRENCY = "INR";
-    private static final Double PAYMENT_ORDER_AMOUNT = 9D;
-    private static final String PAYMENT_ORDER_DESCRIPTION = "This is a test payment order.";
-    private static final String PAYMENT_ORDER_REDIRECT_URL = "https://cf-payment-fearless-oryx.cfapps.io/redirect";
-    private static final String PAYMENT_ORDER_WEBHOOK_URL = "https://cf-payment-fearless-oryx.cfapps.io/webhook";
+    public static final String PAYMENT_ORDER_NAME = "Sagar Kale";
+    public static final String PAYMENT_ORDER_EMAIL = "sagarrk.kale@gmail.com";
+    public static final String PAYMENT_ORDER_PHONE = "9561609535";
+    public static final String PAYMENT_ORDER_CURRENCY = "INR";
+    public static final Double PAYMENT_ORDER_AMOUNT = 9D;
+    public static final String PAYMENT_ORDER_DESCRIPTION = "This is a test payment order.";
+    public static final String PAYMENT_ORDER_REDIRECT_URL = "https://cf-payment-fearless-oryx.cfapps.io/redirect";
+    public static final String PAYMENT_ORDER_WEBHOOK_URL = "https://cf-payment-fearless-oryx.cfapps.io/webhook";
 
     private PaymentOrder paymentOrder;
 
@@ -135,6 +135,11 @@ public class PaymentOrderBuilder {
         paymentOrder.setWebhookUrl(webhookUrl);
         return this;
     }
+
+    public static String getTransactionId() {
+        return UUID.randomUUID().toString();
+    }
+
     /**
      * Build payment order.
      *

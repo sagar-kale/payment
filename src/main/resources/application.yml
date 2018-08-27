@@ -5,9 +5,13 @@ logging:
     org.hibernate: DEBUG
     org.apache.http: DEBUG
 
-spring.messages.basename: validation
-
 spring:
+  messages.basename: validation
+  #devtools:
+   # livereload.enabled: true
+    #restart.exclude: static/**,public/**
+    #reload.trigger-file: .html
+  #thymeleaf.cache: false
   jpa:
     properties:
       hibernate:

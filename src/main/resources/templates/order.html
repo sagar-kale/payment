@@ -6,11 +6,42 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 </head>
 <body>
-<form th:action="@{/order}" method="get">
-    Order ID : <input name="orderId"/> <br/>
-    Name : <input name="name"/> <br/>
-    <input type="submit" value="place order">
+<div sec:authorize="isAnonymous()">
+    Your session has been expired !! please <a th:href="@{/login}">login here</a>
+</div>
 
-</form>
+<div sec:authorize="isAuthenticated()">
+    <h4 th:inline="text">Hello [[${#authentication.getPrincipal().getUsername()}]]!</h4>
+    <hr/>
+    <form action="#" th:action="@{/order}" th:object="${paymentOrder}" method="post">
+        <table>
+            <tr>
+                <td>Name:</td>
+                <td><input type="text" th:field="*{name}" required="required"/></td>
+                <td th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name Error</td>
+            </tr>
+            <tr>
+                <td>Email:</td>
+                <td><input type="email" th:field="*{email}" required="required"/></td>
+                <td th:if="${#fields.hasErrors('email')}" th:errors="*{email}">email Error</td>
+            </tr>
+            <tr>
+                <td>Phone:</td>
+                <td><input type="text" th:field="*{phone}" required="required"/></td>
+                <td th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}">Phones Error</td>
+            </tr>
+            <tr>
+                <td>Amount:</td>
+                <td><input type="text" th:field="*{amount}"/></td>
+                <td th:if="${#fields.hasErrors('amount')}" th:errors="*{amount}">amount Error</td>
+            </tr>
+            <tr>
+                <td>
+                    <button type="submit">Place Order</button>
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>
 </body>
 </html>
