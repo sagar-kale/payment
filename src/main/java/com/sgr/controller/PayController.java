@@ -50,18 +50,18 @@ public class PayController {
         paymentOrder.setId(new RandomIdGenerator().generateId());
         paymentOrder.setCurrency(PaymentOrderBuilder.PAYMENT_ORDER_CURRENCY);
         paymentOrder.setTransactionId(PaymentOrderBuilder.getTransactionId());
-        if (paymentOrder.getAmount() == 0 || paymentOrder.getAmount() > 1000)
-            paymentOrder.setAmount(1000D);
 
         orderValidator.validate(paymentOrder, bindingResult);
 
         if (bindingResult.hasErrors()) {
             return "order";
         }
+        if (paymentOrder.getAmount() == 0 || paymentOrder.getAmount() > 1000)
+            paymentOrder.setAmount(1000D);
         String paymentUrl = instaMojoService.createPaymentOrder(paymentOrder);
         writer.println("<center><h1>Please don't refresh and reload this page</h1></center>");
-        /*  writer.println("<script>location='" + paymentUrl + "'</script>"); */
-        return "redirect:" + paymentUrl;
+        writer.println("<script>location='" + paymentUrl + "'</script>");
+        return "";
     }
 
     @GetMapping(value = "/redirect")
