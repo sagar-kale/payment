@@ -44,7 +44,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .permitAll()
                 .and()
                 .logout()
-                .permitAll().and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED);
+                .invalidateHttpSession(true)
+                .permitAll();
     }
 
     @Autowired
