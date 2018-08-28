@@ -12,6 +12,8 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+import javax.management.relation.RoleInfo;
+
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
@@ -32,8 +34,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers("/", "/register", "/index", "/webhook", "/webjars/**", "/js/**", "/css/**", "/scss/**", "/img/**", "/font/**").permitAll()
-                .anyRequest().authenticated()
+                .antMatchers("/admin/**").hasRole("ROLE_ADMIN")
+                .antMatchers("/", "/register", "/index", "/webhook", "/webjars/**", "/js/**", "/css/**", "/scss/**", "/img/**", "/font/**")
+                .permitAll()
                 .and()
                 .formLogin()
                 .loginPage("/login")
