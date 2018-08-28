@@ -19,17 +19,19 @@ public class User {
     @Transient
     private String passwordConfirm;
     private String phone;
+    private String role;
 
     public User() {
     }
 
-    public User(String username, String firstName, String lastName, String email, String password, String phone) {
+    public User(String username, String firstName, String lastName, String email, String password, String phone, String role) {
         this.username = username;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.password = password;
         this.phone = phone;
+        this.role = role;
     }
 
     public String getId() {
@@ -96,6 +98,14 @@ public class User {
         this.passwordConfirm = passwordConfirm;
     }
 
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -107,6 +117,7 @@ public class User {
                 ", password='" + password + '\'' +
                 ", passwordConfirm='" + passwordConfirm + '\'' +
                 ", phone='" + phone + '\'' +
+                ", role='" + role + '\'' +
                 '}';
     }
 }

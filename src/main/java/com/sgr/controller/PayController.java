@@ -59,9 +59,10 @@ public class PayController {
         if (paymentOrder.getAmount() == 0 || paymentOrder.getAmount() > 1000)
             paymentOrder.setAmount(1000D);
         String paymentUrl = instaMojoService.createPaymentOrder(paymentOrder);
-        writer.println("<center><h1>Please don't refresh and reload this page</h1></center>");
-        writer.println("<script>location='" + paymentUrl + "'</script>");
-        return "";
+        System.out.println("Payment url :: " + paymentUrl);
+        /*writer.println("<center><h1>Please don't refresh and reload this page</h1></center>");
+        writer.println("<script>location='" + paymentUrl + "'</script>");*/
+        return "redirect:" + paymentUrl;
     }
 
     @GetMapping(value = "/redirect")

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+    <title>Admin Control</title>
+</head>
+<body>
+<div sec:authorize="isAnonymous()">
+    Your session has been expired !! please <a th:href="@{/login}">login here</a>
+</div>
+
+<div sec:authorize="hasRole('ROLE_ADMIN')">
+    Welcome Admin : Admin section goes here
+    Roles: <span sec:authentication="principal.authorities">[ROLE_USER, ROLE_ADMIN]</span>
+</div>
+<div sec:authorize="hasRole('ROLE_USER')">
+    You can access user section too
+</div>
+
+<div sec:authorize="isAuthenticated()">
+
+    <h4>Hello <span
+            th:text="${ #strings.capitalize(#authentication.principal.firstName) +' '+
+            #strings.capitalize(#authentication.principal.lastName)}"/> AKA Admin
+    </h4>
+
+    <hr/>
+    Content to be added soon
+    <!--<a th:href="@{/order}">Click here to place order</a>
+    <br/>
+    <form th:action="@{/logout}" method="post" id="logoutForm">
+        <br/><br/>
+        <input type="submit" value="Sign Out"/>
+    </form>-->
+</div>
+</body>
+</html>

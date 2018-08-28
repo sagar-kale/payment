@@ -8,8 +8,26 @@
 <div sec:authorize="isAnonymous()">
     Your session has been expired !! please <a th:href="@{/login}">login here</a>
 </div>
+
+<div sec:authorize="hasRole('ROLE_ADMIN')">
+    This content is only shown to administrators.
+    Roles: <span sec:authentication="principal.authorities">[ROLE_USER, ROLE_ADMIN]</span>
+</div>
+<div sec:authorize="hasRole('ROLE_USER')">
+    This content is only shown to users.
+</div>
+<div sec:authorize-url="/admin">
+    This will only be displayed if authenticated user can call the "/admin" URL.
+</div>
+
 <div sec:authorize="isAuthenticated()">
+
     <h4 th:inline="text">Hello [[${#authentication.getPrincipal().getUsername()}]]!</h4>
+    <h4>Hello <span
+            th:text="${ #strings.capitalize(#authentication.principal.firstName) +' '+
+            #strings.capitalize(#authentication.principal.lastName)}"/>
+    </h4>
+    Logged user: <span sec:authentication="name">Sagar</span>
     <hr/>
     <a th:href="@{/order}">Click here to place order</a>
     <br/>
