@@ -34,7 +34,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers("/", "/register", "/index", "/webhook", "/webjars/**", "/js/**", "/css/**", "/scss/**", "/img/**", "/font/**")
+                .antMatchers("/register", "/index", "/webhook", "/webjars/**", "/js/**", "/css/**", "/scss/**", "/img/**", "/font/**")
                 .permitAll()
                 .antMatchers("/admin").hasRole("ADMIN")
                 /*.antMatchers("/dashboard/home*//**").hasAnyRole("USER", "ADMIN")
@@ -44,7 +44,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .formLogin()
                 .loginPage("/login")
-                .defaultSuccessUrl("/home")
+                /*.successForwardUrl("/home")*/
                 .permitAll()
                 .and()
                 .logout()

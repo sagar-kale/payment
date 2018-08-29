@@ -145,10 +145,10 @@
     </h1>
     <div sec:authorize="isAuthenticated()">
         <p class="Main Description">
-            Hi <span th:text="${ #strings.capitalize(#authentication.principal.firstName)"/> ! You do not have
+            Hi <span th:text="${#strings.capitalize(#authentication.principal.firstName)}"/> ! You do not have
             sufficient
             permission to access this page
-            Back to <a href="@{/home}">Home</a>
+            Back to <a th:href="@{/home}">Home</a>
         </p>
     </div>
 

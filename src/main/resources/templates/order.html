@@ -9,15 +9,14 @@
 <div sec:authorize="isAnonymous()">
     Your session has been expired !! please <a th:href="@{/login}">login here</a>
 </div>
-
-<div sec:authorize="isAuthenticated()">
-    <h4 th:inline="text">Hello [[${#authentication.getPrincipal().getUsername()}]]!</h4>
+<div sec:authorize="isAuthenticated()" th:with="user=${#authentication.principal}">
+    <h4 th:inline="text">Hello [[${#strings.capitalize(user.firstName)}]] [[${#strings.capitalize(user.lastName)}]]</h4>
     <hr/>
     <form action="#" th:action="@{/order}" th:object="${paymentOrder}" method="post">
         <table>
             <tr>
                 <td>Name:</td>
-                <td><input type="text" th:field="*{name}" required="required"/></td>
+                <td><input type="text" th:field="*{name}" required="required"></input></td>
                 <td th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name Error</td>
             </tr>
             <tr>

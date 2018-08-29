@@ -21,8 +21,7 @@
 </div>
 
 <div sec:authorize="isAuthenticated()">
-
-    <h4 th:inline="text">Hello [[${#authentication.getPrincipal().getUsername()}]]!</h4>
+    <!--<h4 th:inline="text">Hello [[${#authentication.getPrincipal().getUsername()}]]!</h4>-->
     <h4>Hello <span
             th:text="${ #strings.capitalize(#authentication.principal.firstName) +' '+
             #strings.capitalize(#authentication.principal.lastName)}"/>

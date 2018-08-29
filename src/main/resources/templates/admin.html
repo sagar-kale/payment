@@ -10,7 +10,7 @@
 </div>
 
 <div sec:authorize="hasRole('ROLE_ADMIN')">
-    Welcome Admin : Admin section goes here
+    Welcome Admin : Admin section goes here <br/>
     Roles: <span sec:authentication="principal.authorities">[ROLE_USER, ROLE_ADMIN]</span>
 </div>
 <div sec:authorize="hasRole('ROLE_USER')">
