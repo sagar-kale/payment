@@ -2,27 +2,42 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head>
-    <title>Spring Security Example </title>
+    <title>Spring Security Tutorial</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/login.css}"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
-<body>
-<div th:if="${param.error}">
-    Invalid username and password.
-</div>
-<div th:if="${param.logout}">
-    You have been logged out.
-</div>
 
-<div sec:authorize="isAuthenticated()">
+<body>
+
+<div sec:authorize="isAuthenticated()" class="d-flex d-sm-flex d-md-flex d-lg-flex  p-2">
     You already logged in <a th:href="@{/home}">HOME</a>
 </div>
 
 <div sec:authorize="isAnonymous()">
-    <form th:action="@{/login}" method="post">
-        <div><label> User Name : <input type="text" name="username"/> </label></div>
-        <div><label> Password: <input type="password" name="password"/> </label></div>
-        <div><input type="submit" value="Sign In"/></div>
-        <a th:href="@{/register}">Click Here Register</a>
-    </form>
+
+
+    <a th:href="@{/register}" class="btn btn-md btn-warning btn-block">Go To Registration Page</a>
+
+    <div class="container">
+        <img th:src="@{/images/login.jpg}" class="img-responsive center-block" width="300" height="300" alt="Logo"/>
+        <form th:action="@{/login}" method="POST" class="form-signin">
+            <h3 class="form-signin-heading" th:text="Welcome"></h3>
+            <br/>
+
+            <input type="text" id="email" name="username" th:placeholder="Email"
+                   class="form-control"/> <br/>
+            <input type="password" th:placeholder="Password"
+                   id="password" name="password" class="form-control"/> <br/>
+
+            <div align="center" th:if="${param.error}">
+                <p style="font-size: 20; color: #FF1C19;">Email or Password invalid, please verify</p>
+            </div>
+            <button class="btn btn-lg btn-primary btn-block" name="Submit" value="Login" type="Submit"
+                    th:text="Login"></button>
+        </form>
+    </div>
 </div>
 </body>
 </html>

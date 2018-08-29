@@ -116,7 +116,7 @@
                 <div class="col-lg-4 col-md-6 mb-4">
 
                     <div class="view overlay z-depth-1-half">
-                        <h4 class="my-4 font-weight-bold">Registration Validation Error</h4>
+                        <h4 class="my-4 font-weight-bold">Registration Validations</h4>
                         <!--<div th:errors="${user.*}">...</div>-->
                         <ul th:if="${#fields.hasErrors('${user.*}')}" class="text-left">
                             <li th:each="err : ${#fields.errors('${user.*}')}" th:text="${err}">Input is incorrect</li>

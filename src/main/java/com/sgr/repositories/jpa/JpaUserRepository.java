@@ -9,4 +9,5 @@ import org.springframework.stereotype.Repository;
 @Profile({"!mongodb"})
 public interface JpaUserRepository extends JpaRepository<User, String> {
     User findByUsername(String username);
+    User findByEmail(String email);
 }

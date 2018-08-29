@@ -33,6 +33,8 @@ public class SecurityServiceImpl implements SecurityService {
     @Override
     public void autologin(String username, String password) {
 
+        logger.debug(String.format("Auto login for %s is processing", username));
+
         Object userDetails = userDetailsService.loadUserByUsername(username);
         if (userDetails instanceof UserDetails) {
             UserDetails user = (UserDetails) userDetails;

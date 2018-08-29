@@ -36,7 +36,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/register", "/index", "/webhook", "/webjars/**", "/js/**", "/css/**", "/scss/**", "/img/**", "/font/**")
                 .permitAll()
-                .antMatchers("/admin").hasRole("ADMIN")
+                .antMatchers("/admin/**").hasRole("ADMIN")
                 /*.antMatchers("/dashboard/home*//**").hasAnyRole("USER", "ADMIN")
          .antMatchers("/dashboard/users*//**").hasRole("ADMIN")
          .antMatchers("/rest/users*//**").hasRole("ADMIN")*/
@@ -57,7 +57,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(WebSecurity web) throws Exception {
-        web.ignoring().antMatchers("/resources/**");
+        web.ignoring().antMatchers("/resources/**", "/static/**", "/vendors/**", "/css/**", "/js/**", "/images/**");
     }
 
     @Autowired

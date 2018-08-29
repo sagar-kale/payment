@@ -3,6 +3,7 @@ package com.sgr.domain;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity(name = "user_details")
 public class User {
@@ -20,19 +21,9 @@ public class User {
     private String passwordConfirm;
     private String phone;
     private String role;
-
-    public User() {
-    }
-
-    public User(String username, String firstName, String lastName, String email, String password, String phone, String role) {
-        this.username = username;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.password = password;
-        this.phone = phone;
-        this.role = role;
-    }
+    private boolean active;
+    @ManyToMany(mappedBy = "users")
+    private Set<Role> roles;
 
     public String getId() {
         return id;
@@ -106,18 +97,19 @@ public class User {
         this.role = role;
     }
 
-    @Override
-    public String toString() {
-        return "User{" +
-                "id='" + id + '\'' +
-                ", username='" + username + '\'' +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", email='" + email + '\'' +
-                ", password='" + password + '\'' +
-                ", passwordConfirm='" + passwordConfirm + '\'' +
-                ", phone='" + phone + '\'' +
-                ", role='" + role + '\'' +
-                '}';
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
     }
 }
