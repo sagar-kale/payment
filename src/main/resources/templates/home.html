@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head>
-    <title>Hello World!</title>
+    <title>Home</title>
 </head>
 <body>
 <div sec:authorize="isAnonymous()">
@@ -14,7 +14,7 @@
     Roles: <span sec:authentication="principal.authorities">[ROLE_USER, ROLE_ADMIN]</span>
 </div>
 <div sec:authorize="hasRole('ROLE_USER')">
-    This content is only shown to users.
+    Welcome to home
 </div>
 <div sec:authorize-url="/admin">
     This will only be displayed if authenticated user can call the "/admin" URL.
