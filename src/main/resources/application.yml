@@ -1,4 +1,5 @@
 server.port: 8080
+
 logging:
   level:
     org.springframework.web: DEBUG
@@ -55,3 +56,31 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.ProgressDialect
+---
+spring:
+  profiles: errorlogs
+  jpa:
+    properties:
+      hibernate:
+        format_sql: false
+        use_sql_comments: false
+        show_sql: false
+    hibernate:
+      ddl-auto: update
+    generate-ddl: false
+    show-sql: false
+  messages:
+    basename: validation
+  thymeleaf:
+    cache: false
+
+logging:
+  level:
+    org.springframework.web: error
+    org.hibernate: error
+    org.apache.http: error
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"

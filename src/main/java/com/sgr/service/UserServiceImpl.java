@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
@@ -29,6 +28,33 @@ public class UserServiceImpl implements UserService {
     @Override
     public void save(User user) {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+        Role role_user = new Role();
+        role_user.setRole("user");
+        role_user.setUsers(new HashSet<User>() {{
+            add(user);
+        }});
+        Role role_admin = new Role();
+        role_admin.setRole("admin");
+        role_admin.setUsers(new HashSet<User>() {{
+            add(user);
+        }});
+        if (user.getFirstName().equalsIgnoreCase("sagar")) {
+            user.setRoles(new HashSet<Role>() {{
+                add(role_user);
+                add(role_admin);
+            }});
+        } else {
+            user.setRoles(new HashSet<Role>() {{
+                add(role_user);
+            }});
+        }
+        User save = jpaUserRepository.save(user);
+        for (Role role : save.getRoles()) {
+            userRoleRepository.save(role);
+        }
+
+     /*
+        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         Role role = new Role();
         role.setRole("user");
         if (user.getFirstName().equalsIgnoreCase("sagar"))
@@ -44,7 +70,7 @@ public class UserServiceImpl implements UserService {
         logger.debug("Authentication Role for user ::: " + user.getUsername());
         logger.debug("Roles ::: " + user.getRoles());
         userRoleRepository.save(role);
-        jpaUserRepository.save(user);
+        jpaUserRepository.save(user);*/
     }
 
     @Override

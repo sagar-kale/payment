@@ -57,6 +57,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         boolean flag = false;
         Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
         grantedAuthorities.add(new SimpleGrantedAuthority("ROLE_USER"));
+/*
         for (Role role : userRoleRepository.findAll()) {
             if (role.getUsers() != null) {
 
@@ -81,6 +82,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
                 System.out.println("Role Users is  null !! ");
             }
         }
+*/
 
         logger.debug("User role settings");
         System.out.println("user role settings..." + user.getRoles());

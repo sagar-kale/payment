@@ -44,9 +44,9 @@ public class UserController {
         return "admin";
     }
 
-    @RequestMapping(value = "/register", method = RequestMethod.GET)
+    @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String showForm(User user) {
-        return "index";
+        return "login";
     }
 
     //@RequestMapping(value = "/registration", method = RequestMethod.POST)
@@ -61,7 +61,7 @@ public class UserController {
         user.setPasswordConfirm(user.getPassword());
 
         if (bindingResult.hasErrors()) {
-            return "index";
+            return "login";
         }
 
         userService.save(user);
