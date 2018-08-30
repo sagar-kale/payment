@@ -37,8 +37,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/register", "/index", "/webhook", "/login")
                 .permitAll()
                 .antMatchers("/admin/**").hasRole("ADMIN")
-                .antMatchers("/admin/**").permitAll()
-                .antMatchers("/admin/users/save").permitAll()
                 .antMatchers("/admin/old/**").hasAuthority("ADMIN")
                 /*.antMatchers("/dashboard/home*//**").hasAnyRole("USER", "ADMIN")
          .antMatchers("/dashboard/users*//**").hasRole("ADMIN")

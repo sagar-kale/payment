@@ -42,148 +42,164 @@
 
             <div class="row">
                 <div class="col-sm-8 col-sm-offset-2 text">
-                    <h1><strong>Welcome</strong>Please Login &amp; Register</h1>
-                    <div class="description">
-                        <p>
-                            You are about to login <strong>"Payment Gateway"</strong> made by Sagar Kale.
-                            Visit User profile <a href="https://facebook.com/sgrkale143" target="_blank"><strong>Sagar Kale</strong></a>,
-                            Have Fun! .
-                        </p>
+                    <div sec:authorize="isAnonymous()">
+                        <h1><strong>Welcome</strong>Please Login &amp; Register</h1>
+                        <div class="description">
+                            <p>
+                                You are about to login <strong>"Payment Gateway"</strong> made by Sagar Kale.
+                                Visit User profile <a href="https://facebook.com/sgrkale143" target="_blank"><strong>Sagar
+                                Kale</strong></a>,
+                                Have Fun! .
+                            </p>
+                        </div>
                     </div>
                     <div th:if="${param.logout}">
                         <strong>You have been logged out successfully .</strong>
                     </div>
+                    <div sec:authorize="isAuthenticated()">
+                        <h1><strong>Welcome</strong> <span
+                                th:text="${ #strings.capitalize(#authentication.principal.firstName) +' '+ #strings.capitalize(#authentication.principal.lastName)}"/>
+                        </h1>
+                        <br/>
+                        <strong>You already logged in. Go <a th:href="@{/home}">HOME</a></strong> OR <a
+                            th:href="@{/admin/}">Admin</a></strong>
+                    </div>
                 </div>
             </div>
+            <div sec:authorize="isAnonymous()">
+                <div class="row">
+                    <div class="col-sm-5">
 
-            <div class="row">
-                <div class="col-sm-5">
-
-                    <div class="form-box">
-                        <div class="form-top">
-                            <div class="form-top-left">
-                                <h3>Login to our site</h3>
-                                <p>Enter username and password to log on:</p>
+                        <div class="form-box">
+                            <div class="form-top">
+                                <div class="form-top-left">
+                                    <h3>Login to our site</h3>
+                                    <p>Enter username and password to log on:</p>
+                                </div>
+                                <div class="form-top-right">
+                                    <i class="fa fa-lock"></i>
+                                </div>
                             </div>
-                            <div class="form-top-right">
-                                <i class="fa fa-lock"></i>
-                            </div>
-                        </div>
-                        <div class="form-bottom">
-                            <form role="form" th:action="@{/login}" method="POST" class="login-form">
-                                <div class="form-group">
-                                    <label class="sr-only" for="form-username">Email</label>
+                            <div class="form-bottom">
+                                <form role="form" th:action="@{/login}" method="POST" class="login-form">
+                                    <div class="form-group">
+                                        <label class="sr-only" for="form-username">Email</label>
                                         <input type="text" name="username" placeholder="Email..."
-                                           class="form-username form-control" id="form-username">
-                                </div>
-                                <div class="form-group">
-                                    <label class="sr-only" for="login-password">Password</label>
-                                    <input type="password" name="password" placeholder="Password..."
-                                           class="form-password form-control" id="login-password">
-                                </div>
-                                <div class="d-inline-flex. d-sm-inline-flex d-md-inline-flex d-lg-inline-flex p-2"
-                                     th:if="${param.error}">
-                                    <label class="validation-message"> Email or Password invalid, Please Try Again !!</label>
-                                </div>
-                                <button type="submit" class="btn">Sign in!</button>
-                            </form>
-                        </div>
-                    </div>
-
-                    <div class="social-login">
-                        <h3>...or login with:</h3>
-                        <div class="social-login-buttons">
-                            <a class="btn btn-link-2" href="#">
-                                <i class="fa fa-facebook"></i> Facebook
-                            </a>
-                            <a class="btn btn-link-2" href="#">
-                                <i class="fa fa-twitter"></i> Twitter
-                            </a>
-                            <a class="btn btn-link-2" href="#">
-                                <i class="fa fa-google-plus"></i> Google Plus
-                            </a>
-                        </div>
-                    </div>
-
-                </div>
-
-                <div class="col-sm-1 middle-border"></div>
-                <div class="col-sm-1"></div>
-
-                <div class="col-sm-5">
-
-                    <div class="form-box">
-                        <div class="form-top">
-                            <div class="form-top-left">
-                                <h3>Sign up now</h3>
-                                <p>Fill in the form below to get instant access:</p>
-                            </div>
-                            <div class="form-top-right">
-                                <i class="fa fa-pencil"></i>
+                                               class="form-username form-control" id="form-username">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="sr-only" for="login-password">Password</label>
+                                        <input type="password" name="password" placeholder="Password..."
+                                               class="form-password form-control" id="login-password">
+                                    </div>
+                                    <div class="d-inline-flex. d-sm-inline-flex d-md-inline-flex d-lg-inline-flex p-2"
+                                         th:if="${param.error}">
+                                        <label class="validation-message"> Email or Password invalid, Please Try Again
+                                            !!</label>
+                                    </div>
+                                    <button type="submit" class="btn">Sign in!</button>
+                                </form>
                             </div>
                         </div>
-                        <div class="form-bottom">
-                            <form action="#" th:action="@{/register}" th:object="${user}" role="form"
-                                  class="registration-form" method="post">
-                                <div class="form-group">
-                                    <label class="sr-only" for="form-first-name">First name</label>
-                                    <input type="text" th:field="*{firstName}" name="firstName"
-                                           placeholder="First name..." class="form-first-name form-control"
-                                           id="form-first-name">
-                                    <label th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"
-                                           class="validation-message"></label>
-                                </div>
-                                <div class="form-group">
-                                    <label class="sr-only" for="form-last-name">Last name</label>
-                                    <input type="text" th:field="*{lastName}" name="lastName" placeholder="Last name..."
-                                           class="form-last-name form-control" id="form-last-name">
-                                    <label th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"
-                                           class="validation-message"></label>
-                                </div>
-                                <div class="form-group">
-                                    <label class="sr-only" for="form-email-name">Email</label>
-                                    <input type="text" th:field="*{email}" name="email" placeholder="Email.."
-                                           class="form-email form-control" id="form-email-name">
-                                    <label th:if="${#fields.hasErrors('email')}" th:errors="*{email}"
-                                           class="validation-message"></label>
-                                </div>
-                                <div class="form-group">
-                                    <label class="sr-only" for="form-password">Password</label>
-                                    <input type="password" th:field="*{password}" name="password" placeholder="Password...."
-                                           class="form-password form-control" id="form-password">
-                                    <label th:if="${#fields.hasErrors('password')}" th:errors="*{password}"
-                                           class="validation-message"></label>
-                                </div>
-                                <div class="form-group">
-                                    <label class="sr-only" for="form-confirm-password">Confirm Password</label>
-                                    <input type="password"  th:field="*{passwordConfirm}" name="passwordConfirm"  placeholder="Confirm Password...."
-                                           class="form-password form-control" id="form-confirm-password">
-                                    <label th:if="${#fields.hasErrors('passwordConfirm')}" th:errors="*{passwordConfirm}"
-                                           class="validation-message"></label>
-                                </div>
 
-                                <div class="form-group">
-                                    <label class="sr-only" for="form-phone">Phone</label>
-                                    <input type="text" th:field="*{phone}" name="email" placeholder="Phone..."
-                                           class="form-phone form-control" id="form-phone">
-                                    <label th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}"
-                                           class="validation-message"></label>
-                                </div>
-
-                                <div class="form-group">
-                                    <label class="sr-only" for="form-about-yourself">About yourself</label>
-                                    <textarea name="form-about-yourself" placeholder="About yourself..."
-                                              class="form-about-yourself form-control"
-                                              id="form-about-yourself"></textarea>
-                                </div>
-                                <button type="submit" class="btn">Sign me up!</button>
-                            </form>
+                        <div class="social-login">
+                            <h3>...or login with:</h3>
+                            <div class="social-login-buttons">
+                                <a class="btn btn-link-2" href="#">
+                                    <i class="fa fa-facebook"></i> Facebook
+                                </a>
+                                <a class="btn btn-link-2" href="#">
+                                    <i class="fa fa-twitter"></i> Twitter
+                                </a>
+                                <a class="btn btn-link-2" href="#">
+                                    <i class="fa fa-google-plus"></i> Google Plus
+                                </a>
+                            </div>
                         </div>
+
                     </div>
 
+                    <div class="col-sm-1 middle-border"></div>
+                    <div class="col-sm-1"></div>
+
+                    <div class="col-sm-5">
+
+                        <div class="form-box">
+                            <div class="form-top">
+                                <div class="form-top-left">
+                                    <h3>Sign up now</h3>
+                                    <p>Fill in the form below to get instant access:</p>
+                                </div>
+                                <div class="form-top-right">
+                                    <i class="fa fa-pencil"></i>
+                                </div>
+                            </div>
+                            <div class="form-bottom">
+                                <form action="#" th:action="@{/register}" th:object="${user}" role="form"
+                                      class="registration-form" method="post">
+                                    <div class="form-group">
+                                        <label class="sr-only" for="form-first-name">First name</label>
+                                        <input type="text" th:field="*{firstName}" name="firstName"
+                                               placeholder="First name..." class="form-first-name form-control"
+                                               id="form-first-name">
+                                        <label th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"
+                                               class="validation-message"></label>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="sr-only" for="form-last-name">Last name</label>
+                                        <input type="text" th:field="*{lastName}" name="lastName"
+                                               placeholder="Last name..."
+                                               class="form-last-name form-control" id="form-last-name">
+                                        <label th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"
+                                               class="validation-message"></label>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="sr-only" for="form-email-name">Email</label>
+                                        <input type="text" th:field="*{email}" name="email" placeholder="Email.."
+                                               class="form-email form-control" id="form-email-name">
+                                        <label th:if="${#fields.hasErrors('email')}" th:errors="*{email}"
+                                               class="validation-message"></label>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="sr-only" for="form-password">Password</label>
+                                        <input type="password" th:field="*{password}" name="password"
+                                               placeholder="Password...."
+                                               class="form-password form-control" id="form-password">
+                                        <label th:if="${#fields.hasErrors('password')}" th:errors="*{password}"
+                                               class="validation-message"></label>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="sr-only" for="form-confirm-password">Confirm Password</label>
+                                        <input type="password" th:field="*{passwordConfirm}" name="passwordConfirm"
+                                               placeholder="Confirm Password...."
+                                               class="form-password form-control" id="form-confirm-password">
+                                        <label th:if="${#fields.hasErrors('passwordConfirm')}"
+                                               th:errors="*{passwordConfirm}"
+                                               class="validation-message"></label>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="sr-only" for="form-phone">Phone</label>
+                                        <input type="text" th:field="*{phone}" name="email" placeholder="Phone..."
+                                               class="form-phone form-control" id="form-phone">
+                                        <label th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}"
+                                               class="validation-message"></label>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="sr-only" for="form-about-yourself">About yourself</label>
+                                        <textarea name="form-about-yourself" placeholder="About yourself..."
+                                                  class="form-about-yourself form-control"
+                                                  id="form-about-yourself"></textarea>
+                                    </div>
+                                    <button type="submit" class="btn">Sign me up!</button>
+                                </form>
+                            </div>
+                        </div>
+
+                    </div>
                 </div>
             </div>
-
         </div>
     </div>
 
@@ -196,7 +212,8 @@
 
             <div class="col-sm-8 col-sm-offset-2">
                 <div class="footer-border"></div>
-                <p>All Rights Reserved <a href="https://facebook.com/sgrkale143" target="_blank"><strong>Sagar Kale</strong></a>
+                <p>All Rights Reserved <a href="https://facebook.com/sgrkale143" target="_blank"><strong>Sagar
+                    Kale</strong></a>
                     having a lot of fun. <i class="fa fa-smile-o"></i></p>
             </div>
 

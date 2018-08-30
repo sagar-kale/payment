@@ -12,7 +12,7 @@
     <!-- Font Awesome -->
     <link th:href="@{/vendors/font-awesome/css/font-awesome.min.css}" rel="stylesheet"/>
     <!-- Custom CSS -->
-    <link rel="stylesheet" type="text/css" th:href="@{/css/custom.min.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/css/custom.min.css}"/>
 
 </head>
 
@@ -34,12 +34,12 @@
                     </div>
                     <div class="profile_info">
                         <span>Welcome,</span>
-                        <h2>John Doe</h2>
+                        <h2 th:text="${ #strings.capitalize(#authentication.principal.firstName) +' '+ #strings.capitalize(#authentication.principal.lastName)}"></h2>
                     </div>
                 </div>
                 <!-- /menu profile quick info -->
 
-                <br />
+                <br/>
 
                 <!-- sidebar menu -->
                 <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
@@ -90,9 +90,12 @@
                     <a data-toggle="tooltip" data-placement="top" title="Lock">
                         <span class="glyphicon glyphicon-eye-close" aria-hidden="true"></span>
                     </a>
-                    <a data-toggle="tooltip" data-placement="top" title="Logout" href="login.html">
-                        <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
-                    </a>
+
+                    <form th:action="@{/logout}" method="post">
+                        <button data-toggle="tooltip" data-placement="top" type="submit" class="btn btn-link"><span class="glyphicon glyphicon-off" aria-hidden="true"></span>
+                        </button>
+                    </form>
+
                 </div>
                 <!-- /menu footer buttons -->
             </div>
@@ -108,7 +111,8 @@
 
                     <ul class="nav navbar-nav navbar-right">
                         <li class="">
-                            <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                            <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown"
+                               aria-expanded="false">
                                 <img th:src="@{/images/img.jpg}" alt="">John Doe
                                 <span class=" fa fa-angle-down"></span>
                             </a>
@@ -126,14 +130,16 @@
                         </li>
 
                         <li role="presentation" class="dropdown">
-                            <a href="javascript:;" class="dropdown-toggle info-number" data-toggle="dropdown" aria-expanded="false">
+                            <a href="javascript:;" class="dropdown-toggle info-number" data-toggle="dropdown"
+                               aria-expanded="false">
                                 <i class="fa fa-envelope-o"></i>
                                 <span class="badge bg-green">6</span>
                             </a>
                             <ul id="menu1" class="dropdown-menu list-unstyled msg_list" role="menu">
                                 <li>
                                     <a>
-                                        <span class="image"><img th:src="@{/images/img.jpg}" alt="Profile Image" /></span>
+                                        <span class="image"><img th:src="@{/images/img.jpg}"
+                                                                 alt="Profile Image"/></span>
                                         <span>
                           <span>John Smith</span>
                           <span class="time">3 mins ago</span>
@@ -145,7 +151,8 @@
                                 </li>
                                 <li>
                                     <a>
-                                        <span class="image"><img th:src="@{/images/img.jpg}" alt="Profile Image" /></span>
+                                        <span class="image"><img th:src="@{/images/img.jpg}"
+                                                                 alt="Profile Image"/></span>
                                         <span>
                           <span>John Smith</span>
                           <span class="time">3 mins ago</span>
@@ -157,7 +164,8 @@
                                 </li>
                                 <li>
                                     <a>
-                                        <span class="image"><img th:src="@{/images/img.jpg}" alt="Profile Image" /></span>
+                                        <span class="image"><img th:src="@{/images/img.jpg}"
+                                                                 alt="Profile Image"/></span>
                                         <span>
                           <span>John Smith</span>
                           <span class="time">3 mins ago</span>
@@ -169,7 +177,8 @@
                                 </li>
                                 <li>
                                     <a>
-                                        <span class="image"><img th:src="@{/images/img.jpg}" alt="Profile Image" /></span>
+                                        <span class="image"><img th:src="@{/images/img.jpg}"
+                                                                 alt="Profile Image"/></span>
                                         <span>
                           <span>John Smith</span>
                           <span class="time">3 mins ago</span>
@@ -200,7 +209,9 @@
             <div class="">
                 <div class="page-title">
                     <div class="title_left">
-                        <h3>Tables <small>Some examples to get you started</small></h3>
+                        <h3>Tables
+                            <small>Some examples to get you started</small>
+                        </h3>
                     </div>
 
                     <div class="title_right">
@@ -228,7 +239,7 @@
         <!-- footer content -->
         <footer>
             <div class="pull-right">
-                Gentelella - Bootstrap Admin Template by <a href="https://colorlib.com">Colorlib</a>
+                Gentelella - Bootstrap Admin Template by <a href="#">Colorlib</a>
             </div>
             <div class="clearfix"></div>
         </footer>
@@ -237,9 +248,9 @@
 </div>
 
 <!-- jQuery -->
-<script type="text/javascript" src="vendors/jquery/dist/jquery.min.js"></script>
+<script type="text/javascript" th:src="@{/vendors/jquery/dist/jquery.min.js}"></script>
 <!-- Bootstrap -->
-<script  type="text/javascript" src="vendors/bootstrap/dist/js/bootstrap.min.js"></script>
+<script type="text/javascript" th:src="@{/vendors/bootstrap/dist/js/bootstrap.min.js}"></script>
 <!-- Custom Theme Scripts -->
 <script th:src="@{/js/app.js}"></script>
 </body>
