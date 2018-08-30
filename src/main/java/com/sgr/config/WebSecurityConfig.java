@@ -34,9 +34,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers("/register", "/index", "/webhook","/login")
+                .antMatchers("/register", "/index", "/webhook", "/login")
                 .permitAll()
                 .antMatchers("/admin/**").hasRole("ADMIN")
+                .antMatchers("/admin/**").permitAll()
+                .antMatchers("/admin/users/save").permitAll()
+                .antMatchers("/admin/old/**").hasAuthority("ADMIN")
                 /*.antMatchers("/dashboard/home*//**").hasAnyRole("USER", "ADMIN")
          .antMatchers("/dashboard/users*//**").hasRole("ADMIN")
          .antMatchers("/rest/users*//**").hasRole("ADMIN")*/
@@ -57,7 +60,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(WebSecurity web) throws Exception {
-        web.ignoring().antMatchers("/resources/**", "/static/**", "/vendors/**", "/css/**", "/js/**", "/images/**", "/assets/**","/webjars/**","/scss/**", "/img/**", "/font/**");
+        web.ignoring().antMatchers("/resources/**", "/static/**", "/vendors/**", "/css/**", "/js/**", "/images/**", "/assets/**", "/webjars/**", "/scss/**", "/img/**", "/font/**");
     }
 
     @Autowired
