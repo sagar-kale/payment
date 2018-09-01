@@ -36,7 +36,7 @@ public class OrderValidator implements Validator {
             if (paymentOrder.isAmountInvalid() || paymentOrder.getAmount() < 9.0D) {
                 errors.rejectValue("amount", "order.amount.invalid");
             }
-            if (paymentOrder.getName().length() > 100) {
+            if (paymentOrder.getName()!=null && paymentOrder.getName().length() > 100) {
                 errors.rejectValue("name", "order.name.invalid");
             }
 

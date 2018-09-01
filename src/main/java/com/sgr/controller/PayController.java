@@ -40,7 +40,7 @@ public class PayController {
         paymentOrder.setName(user.getFirstName() + " " + user.getLastName());
         paymentOrder.setEmail(user.getEmail());
         paymentOrder.setPhone(user.getPhone());
-        return "order";
+        return "user/order";
     }
 
     @PostMapping("/order")
@@ -62,7 +62,7 @@ public class PayController {
         orderValidator.validate(paymentOrder, bindingResult);
 
         if (bindingResult.hasErrors()) {
-            return "order";
+            return "user/order";
         }
         if (paymentOrder.getAmount() == 0 || paymentOrder.getAmount() > 1000)
             paymentOrder.setAmount(1000D);

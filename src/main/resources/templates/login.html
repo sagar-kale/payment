@@ -7,7 +7,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Bootstrap Login &amp; Register Templates</title>
+    <title>Welcome to SgR Store - Login and Register</title>
 
     <!-- CSS -->
     <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:400,100,300,500">
@@ -43,7 +43,7 @@
             <div class="row">
                 <div class="col-sm-8 col-sm-offset-2 text">
                     <div sec:authorize="isAnonymous()">
-                        <h1><strong>Welcome</strong>Please Login &amp; Register</h1>
+                        <h1><strong>Welcome User</strong><br/></strong>Please Login &amp; Register</h1>
                         <div class="description">
                             <p>
                                 You are about to login <strong>"Payment Gateway"</strong> made by Sagar Kale.
@@ -67,7 +67,7 @@
                 </div>
             </div>
             <div sec:authorize="isAnonymous()">
-                <div class="row">
+                <div class="row" id="loginuserform">
                     <div class="col-sm-5">
 
                         <div class="form-box">
@@ -92,6 +92,8 @@
                                         <input type="password" name="password" placeholder="Password..."
                                                class="form-password form-control" id="login-password">
                                     </div>
+                                    <p id="capsWarning">The Caps Lock Is ON</p>
+                                    <p class="r"><span id="changetext"></span></p>
                                     <div class="d-inline-flex. d-sm-inline-flex d-md-inline-flex d-lg-inline-flex p-2"
                                          th:if="${param.error}">
                                         <label class="validation-message"> Email or Password invalid, Please Try Again
@@ -226,11 +228,55 @@
 <script src="assets/bootstrap/js/bootstrap.min.js"></script>
 <script src="assets/js/jquery.backstretch.min.js"></script>
 <script src="assets/js/scripts.js"></script>
+<script src="js/jquery.capslockstate.js"></script>
 
 <!--[if lt IE 10]>
 <script src="assets/js/placeholder.js"></script>
 <![endif]-->
+<script>
 
+    $(document).ready(function () {
+    // Handler for .ready() called.
+    $('html, body').animate({
+        scrollTop: $('#loginuserform').offset().top
+    }, 'slow');
+
+
+    $(window).bind("capsOn", function(event) {
+        if ($("#login-password:focus").length > 0) {
+            $("#capsWarning").show();
+        }
+    });
+    $(window).bind("capsOff capsUnknown", function(event) {
+        $("#capsWarning").hide();
+    });
+    $("#login-password").bind("focusout", function(event) {
+        $("#capsWarning").hide();
+    });
+    $("#login-password").bind("focusin", function(event) {
+        if ($(window).capslockstate("state") === true) {
+            $("#capsWarning").show();
+        }
+    });
+
+    /*
+    * Additional event notifying there has been a change, but not the state
+    */
+    $(window).bind("capsChanged", function(event) {
+        $("#changetext").html("changed").show().fadeOut();
+    });
+
+    /*
+    * Initialize the capslockstate plugin.
+    * Monitoring is happening at the window level.
+    */
+    $(window).capslockstate();
+
+
+});
+
+
+</script>
 </body>
 
 </html>

@@ -1,16 +1,17 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>User Registration</title>
+    <title>User Home</title>
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <!-- Bootstrap core CSS -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/bootstrap.css" rel="stylesheet">
     <!-- Material Design Bootstrap -->
     <link href="css/mdb.min.css" rel="stylesheet">
     <!-- Your custom styles (optional) -->
@@ -20,7 +21,7 @@
 <body>
 
 <!--Main Navigation-->
-<header class="register-section">
+<header>
 
     <!--Navbar-->
     <nav class="navbar navbar-expand-lg navbar-dark fixed-top scrolling-navbar">
@@ -39,35 +40,39 @@
             <!-- Collapsible content -->
             <div class="collapse navbar-collapse" id="basicExampleNav">
 
-                <!-- Links -->
-                <ul class="navbar-nav mr-auto smooth-scroll">
-                    <li class="nav-item">
-                        <a class="nav-link" th:href="@{/login}">Login</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#register">Register</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#contact">Contact</a>
-                    </li>
-                </ul>
-                <!-- Links -->
+            <!-- Links -->
+            <ul class="navbar-nav mr-auto smooth-scroll">
+                <li class="nav-item">
+                    <a class="nav-link text-capitalize" href="#">Welcome <span
+                            th:text="${#authentication.principal.firstName+' '+#authentication.principal.lastName}"/>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/order}">Order</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#contact">Contact</a>
+                </li>
+            </ul>
+            <!-- Links -->
 
-                <!-- Social Icon  -->
-                <ul class="navbar-nav nav-flex-icons">
-                    <li class="nav-item">
-                        <a class="nav-link" href="https://facebook.com/sgrkale143"><i class="fa fa-facebook"></i></a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link"><i class="fa fa-twitter"></i></a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="https://instagram.com/sgrkale"><i class="fa fa-instagram"></i></a>
-                    </li>
-                </ul>
-
-            </div>
-            <!-- Collapsible content -->
+            <!-- Social Icon  -->
+            <ul class="navbar-nav nav-flex-icons">
+                <li class="nav-item">
+                    <a class="nav-link" href="https://facebook.com/sgrkale143"><i class="fa fa-facebook"></i></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link"><i class="fa fa-twitter"></i></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="https://instagram.com/sgrkale"><i class="fa fa-instagram"></i></a>
+                </li>
+            </ul>
+            <form class="form-inline" th:action="@{/logout}" method="post">
+                <button class="btn btn-link btn-link my-2 my-sm-0" type="submit">Logout</button>
+            </form>
+        </div>
+        <!-- Collapsible content -->
 
         </div>
     </nav>
@@ -107,17 +112,20 @@
 <main class="mt-5">
     <div class="container">
         <!--Section: Examples-->
-        <section id="register" class="text-center">
-            <!--Grid row-->
-            <!-- Heading -->
+        <section layout:fragment="content">
+            <p>Page content goes here</p>
+        </section>
+        <!--<section id="register" class="text-center">
+            &lt;!&ndash;Grid row&ndash;&gt;
+            &lt;!&ndash; Heading &ndash;&gt;
             <h2 class="mb-5 font-weight-bold text-center">Register</h2>
             <div class="row">
-                <!--Grid column-->
+                &lt;!&ndash;Grid column&ndash;&gt;
                 <div class="col-lg-4 col-md-6 mb-4">
 
                     <div class="view overlay z-depth-1-half">
                         <h4 class="my-4 font-weight-bold">Registration Validations</h4>
-                        <!--<div th:errors="${user.*}">...</div>-->
+                        &lt;!&ndash;<div th:errors="${user.*}">...</div>&ndash;&gt;
                         <ul th:if="${#fields.hasErrors('${user.*}')}" class="text-left">
                             <li th:each="err : ${#fields.errors('${user.*}')}" th:text="${err}">Input is incorrect</li>
                         </ul>
@@ -127,36 +135,36 @@
 
                 </div>
 
-                <!--Grid column-->
+                &lt;!&ndash;Grid column&ndash;&gt;
                 <div class="col-lg-8 col-md-6 mb-4">
                     <div class="view overlay z-depth-1-half">
-                        <!-- Default form register -->
+                        &lt;!&ndash; Default form register &ndash;&gt;
                         <form action="#" th:action="@{/register}" th:object="${user}"
                               class="text-center border border-light p-5" method="post"><p class="h4 mb-4">
                             Registration</p>
 
                             <div class="form-row mb-4">
                                 <div class="col">
-                                    <!-- First name -->
+                                    &lt;!&ndash; First name &ndash;&gt;
                                     <input type="text" th:field="*{firstName}" name="firstName"
                                            id="defaultRegisterFormFirstName"
                                            class="form-control" th:errorclass="fieldError" placeholder="First name"/>
-                                    <!--<p th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}">Invalid</p>-->
+                                    &lt;!&ndash;<p th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}">Invalid</p>&ndash;&gt;
                                 </div>
                                 <div class="col">
-                                    <!-- Last name -->
+                                    &lt;!&ndash; Last name &ndash;&gt;
                                     <input type="text" th:field="*{lastName}" name="lastName"
                                            id="defaultRegisterFormLastName"
                                            class="form-control" placeholder="Last name">
                                   </div>
                             </div>
 
-                            <!-- E-mail -->
+                            &lt;!&ndash; E-mail &ndash;&gt;
                             <input type="email" th:field="*{email}" name="email" id="defaultRegisterFormEmail"
                                    class="form-control mb-4"
                                    placeholder="E-mail" autofocus="autofocus" th:errorclass="fieldError">
 
-                            <!-- Password -->
+                            &lt;!&ndash; Password &ndash;&gt;
                             <input type="password" th:field="*{password}" name="password"
                                    id="defaultRegisterFormPassword" class="form-control"
                                    placeholder="Password" aria-describedby="defaultRegisterFormPasswordHelpBlock">
@@ -164,7 +172,7 @@
                                 At least 8 characters and 1 digit
                             </small>
 
-                            <!-- Phone number -->
+                            &lt;!&ndash; Phone number &ndash;&gt;
                             <input type="text" name="phone" th:field="*{phone}" id="defaultRegisterPhonePassword"
                                    class="form-control"
                                    placeholder="Phone number" aria-describedby="defaultRegisterFormPhoneHelpBlock">
@@ -172,30 +180,30 @@
                                 Optional - for two step authentication
                             </small>
 
-                            <!-- Newsletter -->
+                            &lt;!&ndash; Newsletter &ndash;&gt;
                             <div class="custom-control custom-checkbox">
                                 <input type="checkbox" class="custom-control-input" id="defaultRegisterFormNewsletter">
                                 <label class="custom-control-label" for="defaultRegisterFormNewsletter">Subscribe to our
                                     newsletter</label>
                             </div>
 
-                            <!-- Sign up button -->
+                            &lt;!&ndash; Sign up button &ndash;&gt;
                             <button class="btn btn-info my-4 btn-block" type="submit">Sign in</button>
 
                             <hr>
 
-                            <!-- Terms of service -->
+                            &lt;!&ndash; Terms of service &ndash;&gt;
                             <p>By clicking
                                 <em>Sign up</em> you agree to our
                                 <a href="" target="_blank">terms of service</a> and
                                 <a href="" target="_blank">terms of service</a>. </p>
 
                         </form>
-                        <!-- Default form register -->
+                        &lt;!&ndash; Default form register &ndash;&gt;
                     </div>
                 </div>
             </div>
-        </section>
+        </section>-->
         <!--Section: Contact-->
         <section id="contact">
 
@@ -469,40 +477,21 @@
 
 
 
-
-
-
-
-
-
-
-
-
 </script>
 
 <!-- Carousel options -->
 <script>
         $('.carousel').carousel({
             interval: 3000,
-        })
-        $(document).ready(function () {
+        });
+
+    $(document).ready(function () {
     // Handler for .ready() called.
+
     $('html, body').animate({
-        scrollTop: $('#register').offset().top
+        scrollTop: $('#order').offset().top
     }, 'slow');
 });
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

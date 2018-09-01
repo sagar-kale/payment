@@ -12,7 +12,7 @@ spring:
    # livereload.enabled: true
     #restart.exclude: static/**,public/**
     #reload.trigger-file: .html
-  #thymeleaf.cache: false
+  thymeleaf.cache: false
   jpa:
     properties:
       hibernate:

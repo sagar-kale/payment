@@ -31,12 +31,12 @@ public class UserController {
 
     @GetMapping("/")
     public String welcome() {
-        return "home";
+        return "user/home";
     }
 
     @GetMapping("/home")
     public String home() {
-        return "home";
+        return "user/home";
     }
 
     @GetMapping("/admin")
@@ -47,6 +47,11 @@ public class UserController {
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String showForm(User user) {
         return "login";
+    }
+
+    @GetMapping("/userregister")
+    public String showRegister(User user) {
+        return "user/register";
     }
 
     //@RequestMapping(value = "/registration", method = RequestMethod.POST)
@@ -68,7 +73,7 @@ public class UserController {
         securityService.autologin(user.getUsername(), user.getPasswordConfirm());
         logger.info("Password ::: " + user.getPassword());
         logger.info("Password plain ::: " + user.getPasswordConfirm());
-        return "home";
+        return "user/home";
     }
 
    /* @RequestMapping(value = "/login", method = RequestMethod.GET)
