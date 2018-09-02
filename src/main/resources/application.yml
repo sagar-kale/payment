@@ -2,9 +2,9 @@ server.port: 8080
 
 logging:
   level:
-    org.springframework.web: DEBUG
-    org.hibernate: DEBUG
-    org.apache.http: DEBUG
+    org.springframework.web: error
+    org.hibernate: error
+    org.apache.http: error
 
 spring:
   messages.basename: validation
@@ -16,12 +16,12 @@ spring:
   jpa:
     properties:
       hibernate:
-        format_sql: true
-        use_sql_comments: true
-        show_sql: true
-        type: trace
-    generate-ddl: true
-    show-sql: true
+        format_sql: false
+        use_sql_comments: false
+        show_sql: false
+        #type: trace
+    generate-ddl: false
+    show-sql: false
     hibernate:
       ddl-auto: update
 
