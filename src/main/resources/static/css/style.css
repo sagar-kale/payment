@@ -6,7 +6,7 @@ header,
 }
 
 #intro {
-    background: url("../img/bg_nature.jpg")no-repeat center center fixed;
+    background: url("../img/bg_nature.jpg") no-repeat center center fixed;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
@@ -18,16 +18,26 @@ header,
 }
 
 .btn-sgr-color {
-color: #000;
+    color: #000;
 }
 
 @media (max-width: 768px) {
-  .navbar:not(.top-nav-collapse) {
-    background: #24355C;
-  }
+    .navbar:not(.top-nav-collapse) {
+        background: #24355C;
+
+    }
+
+    .logout-btn {
+        padding-left: 0px;
+    }
 }
+
 @media (min-width: 800px) and (max-width: 850px) {
-  .navbar:not(.top-nav-collapse) {
-    background: #24355C;
-  }
+    .navbar:not(.top-nav-collapse) {
+        background: #24355C;
+    }
+
+    .logout-btn {
+        padding-left: 0px;
+    }
 }

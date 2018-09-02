@@ -13,9 +13,11 @@
     <!-- Bootstrap core CSS -->
     <link href="css/bootstrap.css" rel="stylesheet">
     <!-- Material Design Bootstrap -->
-    <link href="css/mdb.min.css" rel="stylesheet">
+    <link href="css/mdb.css" rel="stylesheet">
     <!-- Your custom styles (optional) -->
     <link href="css/style.css" rel="stylesheet">
+
+    <script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
 </head>
 
 <body>
@@ -40,39 +42,41 @@
             <!-- Collapsible content -->
             <div class="collapse navbar-collapse" id="basicExampleNav">
 
-            <!-- Links -->
-            <ul class="navbar-nav mr-auto smooth-scroll">
-                <li class="nav-item">
-                    <a class="nav-link text-capitalize" href="#">Welcome <span
-                            th:text="${#authentication.principal.firstName+' '+#authentication.principal.lastName}"/>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" th:href="@{/order}">Order</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#contact">Contact</a>
-                </li>
-            </ul>
-            <!-- Links -->
+                <!-- Links -->
+                <ul class="navbar-nav mr-auto smooth-scroll">
+                    <li class="nav-item">
+                        <a class="nav-link text-capitalize" href="#">Welcome <span
+                                th:text="${#authentication.principal.firstName+' '+#authentication.principal.lastName}"/>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#order" th:href="@{/order}">Order</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#contact">Contact</a>
+                    </li>
+                </ul>
+                <!-- Links -->
 
-            <!-- Social Icon  -->
-            <ul class="navbar-nav nav-flex-icons">
-                <li class="nav-item">
-                    <a class="nav-link" href="https://facebook.com/sgrkale143"><i class="fa fa-facebook"></i></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link"><i class="fa fa-twitter"></i></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="https://instagram.com/sgrkale"><i class="fa fa-instagram"></i></a>
-                </li>
-            </ul>
-            <form class="form-inline" th:action="@{/logout}" method="post">
-                <button class="btn btn-link btn-link my-2 my-sm-0" type="submit">Logout</button>
-            </form>
-        </div>
-        <!-- Collapsible content -->
+                <!-- Social Icon  -->
+                <ul class="navbar-nav nav-flex-icons">
+                    <li class="nav-item">
+                        <a class="nav-link" href="https://facebook.com/sgrkale143"><i class="fa fa-facebook"></i></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link"><i class="fa fa-twitter"></i></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="https://instagram.com/sgrkale"><i class="fa fa-instagram"></i></a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav mr-auto smooth-scroll">
+                    <form class="form-inline" th:action="@{/logout}" method="post">
+                        <button class="btn btn-link my-2 my-sm-0 logout-btn" type="submit">Logout</button>
+                    </form>
+                </ul>
+            </div>
+            <!-- Collapsible content -->
 
         </div>
     </nav>
@@ -435,7 +439,6 @@
 
 <!-- SCRIPTS -->
 <!-- JQuery -->
-<script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
 <!-- Bootstrap tooltips -->
 <script type="text/javascript" src="js/popper.min.js"></script>
 <!-- Bootstrap core JavaScript -->
@@ -448,52 +451,36 @@
 
 <!-- Google Maps settings -->
 <script>
-        // Regular map
-        function regular_map() {
-            var var_location = new google.maps.LatLng(40.725118, -73.997699);
+    // Regular map
+    function regular_map() {
+        var var_location = new google.maps.LatLng(40.725118, -73.997699);
 
-            var var_mapoptions = {
-                center: var_location,
-                zoom: 14
-            };
+        var var_mapoptions = {
+            center: var_location,
+            zoom: 14
+        };
 
-            var var_map = new google.maps.Map(document.getElementById("map-container"),
-                var_mapoptions);
+        var var_map = new google.maps.Map(document.getElementById("map-container"),
+            var_mapoptions);
 
-            var var_marker = new google.maps.Marker({
-                position: var_location,
-                map: var_map,
-                title: "New York"
-            });
-        }
+        var var_marker = new google.maps.Marker({
+            position: var_location,
+            map: var_map,
+            title: "New York"
+        });
+    }
 
-        // Initialize maps
-        google.maps.event.addDomListener(window, 'load', regular_map);
-
-
-
-
-
-
+    // Initialize maps
+    google.maps.event.addDomListener(window, 'load', regular_map);
 
 
 </script>
 
 <!-- Carousel options -->
 <script>
-        $('.carousel').carousel({
-            interval: 3000,
-        });
-
-    $(document).ready(function () {
-    // Handler for .ready() called.
-
-    $('html, body').animate({
-        scrollTop: $('#order').offset().top
-    }, 'slow');
-});
-
-
+    $('.carousel').carousel({
+        interval: 3000,
+    });
 
 
 
