@@ -55,13 +55,13 @@ public class UserController {
     }
 
     //@RequestMapping(value = "/registration", method = RequestMethod.POST)
-    @RequestMapping(value = "/register", method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+    @RequestMapping(value = "/register", method = RequestMethod.POST, consumes = {MediaType.APPLICATION_FORM_URLENCODED_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
     public String registration(@Valid User user, BindingResult bindingResult, Model model) {
 
-        logger.info("Adding User " + user.getId());
+        logger.info("Adding User " + user.getUsername());
         logger.info("User::: " + user);
         user.setUsername(user.getEmail());
-        user.setRole("user");
+        user.setActive(true);
         userValidator.validate(user, bindingResult);
         user.setPasswordConfirm(user.getPassword());
 

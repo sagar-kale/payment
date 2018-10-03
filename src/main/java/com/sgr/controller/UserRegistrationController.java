@@ -28,7 +28,7 @@ public class UserRegistrationController {
 
     @RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     public User add(User user) {
-        logger.info("Adding User " + user.getId());
+        logger.info("Adding User " + user.getUsername());
         logger.info("User " + user);
         user.setUsername("Test_" + new RandomIdGenerator().generateId());
         return repository.save(user);
@@ -36,7 +36,7 @@ public class UserRegistrationController {
 
     @RequestMapping(method = RequestMethod.PUT)
     public User update(@RequestBody @Valid User user) {
-        logger.info("Updating User " + user.getId());
+        logger.info("Updating User " + user.getUsername());
         return repository.save(user);
     }
 

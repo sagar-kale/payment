@@ -57,33 +57,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         boolean flag = false;
         Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
         grantedAuthorities.add(new SimpleGrantedAuthority("ROLE_USER"));
-/*
-        for (Role role : userRoleRepository.findAll()) {
-            if (role.getUsers() != null) {
-
-                for (com.sgr.domain.User userFromrole : role.getUsers()) {
-                    System.out.println("In Setting permission Role is not null");
-                    System.out.println(String.format("%s : Roles From Role table %s", user.getUsername(), userFromrole.getRole()));
-                    if (userFromrole.getUsername().equalsIgnoreCase(user.getUsername())) {
-                        System.out.println("***************** before combining ************* \nRole Table Rules::: " + userFromrole.getRoles() + " \nUser Table Rules ::: " + user.getRoles());
-                        Set<Role> roles = Sets.union(userFromrole.getRoles(), user.getRoles());
-                        System.out.println("***************** after combining ************* \nUnion Rules::: " + roles);
-                        for (Role roleFromUser : roles) {
-                            if (roleFromUser.getRole() != null && roleFromUser.getRole().trim().length() > 0) {
-                                if (roleFromUser.getRole().equalsIgnoreCase("admin")) {
-                                    grantedAuthorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
-                                }
-                            }
-                        }
-                    }
-                }
-            } else {
-
-                System.out.println("Role Users is  null !! ");
-            }
-        }
-*/
-
         logger.debug("User role settings");
         System.out.println("user role settings..." + user.getRoles());
         for (Role roleFromUser : user.getRoles()) {
@@ -119,7 +92,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         currentUser.setLastName(user.getLastName());
         currentUser.setEmail(user.getEmail());
         currentUser.setPhone(user.getPhone());
-
+        currentUser.setProfile_pic(user.getProfile_pic_link());
+        currentUser.setProfile_thumb_url(user.getProfile_thumb_url());
         return currentUser;
     }
 

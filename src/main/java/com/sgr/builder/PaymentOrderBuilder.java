@@ -15,8 +15,8 @@ public class PaymentOrderBuilder {
     public static final String PAYMENT_ORDER_CURRENCY = "INR";
     public static final Double PAYMENT_ORDER_AMOUNT = 9D;
     public static final String PAYMENT_ORDER_DESCRIPTION = "This is a test payment order.";
-    public static final String PAYMENT_ORDER_REDIRECT_URL = "https://cf-payment-fearless-oryx.cfapps.io/redirect";
-    public static final String PAYMENT_ORDER_WEBHOOK_URL = "https://cf-payment-fearless-oryx.cfapps.io/webhook";
+    public static final String PAYMENT_ORDER_REDIRECT_URL = "https://sagarkale.cfapps.io/redirect";
+    public static final String PAYMENT_ORDER_WEBHOOK_URL = "https://sagarkale.cfapps.io/webhook";
 
     private PaymentOrder paymentOrder;
 

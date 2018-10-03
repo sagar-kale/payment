@@ -14,6 +14,8 @@ public class CurrentUser extends User {
     private String lastName;
     private String email;
     private String phone;
+    private String profile_pic;
+    private String profile_thumb_url;
 
     public CurrentUser(String username, String password, Collection<? extends GrantedAuthority> authorities) {
         super(username, password, authorities);
@@ -63,5 +65,21 @@ public class CurrentUser extends User {
                 ", email='" + email + '\'' +
                 ", phone='" + phone + '\'' +
                 '}';
+    }
+
+    public String getProfile_pic() {
+        return profile_pic;
+    }
+
+    public void setProfile_pic(String profile_pic) {
+        this.profile_pic = profile_pic;
+    }
+
+    public String getProfile_thumb_url() {
+        return profile_thumb_url;
+    }
+
+    public void setProfile_thumb_url(String profile_thumb_url) {
+        this.profile_thumb_url = profile_thumb_url;
     }
 }

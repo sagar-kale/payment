@@ -3,25 +3,34 @@ package com.sgr.controller;
 import com.sgr.domain.Role;
 import com.sgr.domain.User;
 import com.sgr.service.UserService;
+import com.sgr.validator.UserValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
 import java.util.List;
 
 @Controller
+@CrossOrigin
 public class AdminController {
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private UserValidator userValidator;
+
 
     @RequestMapping(value = "/admin/", method = RequestMethod.GET)
     public String home() {
@@ -36,12 +45,23 @@ public class AdminController {
     }
 
     @RequestMapping(value = "/admin/users/list", method = RequestMethod.GET)
-    public ModelAndView index() {
-        ModelAndView modelAndView = new ModelAndView();
+    public String index(Model model, User user) {
         List<User> users = userService.findAll();
-        modelAndView.addObject("users", users);
-        modelAndView.setViewName("admin/users/list");
-        return modelAndView;
+        model.addAttribute("users", users);
+        return "admin/users/list";
+    }
+
+    @RequestMapping(value = "/admin/user/status", method = RequestMethod.POST)
+    public String updateStatus(@RequestParam String username, Model model) {
+        logger.info("Updating user status :::" + username);
+        if (username == null) {
+            model.addAttribute("error","Null Username");
+            return "admin/users/list";
+        }
+        boolean updated = userService.updateUserActiveStatus(username);
+        model.addAttribute("users", userService.findAll());
+        model.addAttribute("updated", updated);
+        return "admin/users/list";
     }
 
     @RequestMapping(value = "/admin/users/teams", method = RequestMethod.GET)
@@ -57,43 +77,37 @@ public class AdminController {
     }
 
     @RequestMapping(value = "/admin/users/create", method = RequestMethod.GET)
-    public ModelAndView create() {
-        ModelAndView modelAndView = new ModelAndView();
+    public String create(Model model, User user) {
         List<Role> roles = userService.findAllRoles();
-        modelAndView.addObject("roles", roles);
-        User user = new User();
-        modelAndView.addObject("user", user);
-        modelAndView.setViewName("admin/users/create");
-        return modelAndView;
+        model.addAttribute("roles", roles);
+        model.addAttribute("user", user);
+        return "admin/users/create";
     }
 
     @RequestMapping(value = "/admin/users/save", method = RequestMethod.POST)
-    public ModelAndView save(@Valid User user, BindingResult bindingResult) {
+    public String save(@Valid User user, BindingResult bindingResult, Model model) {
 
-        logger.info("This is a debug message");
-
+        logger.info("Under admin saving user:: " + user.getRoles());
+        user.setUsername(user.getEmail());
         List<Role> roles = userService.findAllRoles();
-
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("roles", roles);
-
-
-        User userExists = userService.findUserByEmail(user.getEmail());
-        if (userExists != null) {
+        model.addAttribute("roles", roles);
+        /*User userExists = userService.findByUsername(user.getEmail());*/
+        /*if (userExists != null) {
             bindingResult
                     .rejectValue("email", "error.user",
                             "There is already a user registered with the email provided");
-        }
+        }*/
+
+        user.setActive(true);
+        user.setPasswordConfirm(user.getPassword());
+        userValidator.validate(user, bindingResult);
+
         if (bindingResult.hasErrors()) {
-            logger.info("This is a error message" + bindingResult.toString());
-            modelAndView.setViewName("admin/users/create");
-        } else {
-            userService.createUser(user);
-            modelAndView.addObject("successMessage", "User has been registered successfully");
-            modelAndView.addObject("user", new User());
-            modelAndView.setViewName("admin/users/create");
+            return "admin/users/create";
         }
-        return modelAndView;
+        userService.createUser(user);
+        model.addAttribute("successMessage", "User has been registered successfully");
+        return "admin/users/create";
     }
 
 }

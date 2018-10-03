@@ -8,10 +8,6 @@ logging:
 
 spring:
   messages.basename: validation
-  #devtools:
-   # livereload.enabled: true
-    #restart.exclude: static/**,public/**
-    #reload.trigger-file: .html
   thymeleaf.cache: false
   jpa:
     properties:
@@ -30,6 +26,11 @@ management:
     web:
       exposure:
         include: "*"
+cloudinary:
+  cloud_name: sgrkale
+  api_key: 423365436679876
+  api_secret: lc9l1fKrtifRCquCezCUSbGOLTQ
+
 
 ---
 spring:
@@ -48,10 +49,10 @@ spring:
 spring:
   profiles: postgres
   datasource:
-    url: "postgres://https://tlhjpzrd:yIIfrJfypN3nvNVsmkwf0arULefly-e4@elmer.db.elephantsql.com:5432/tlhjpzrd"
+    url: ${JDBC_DATABASE_URL}
     driver-class-name: org.postgresql.Driver
-    username: tlhjpzrd
-    password: yIIfrJfypN3nvNVsmkwf0arULefly-e4
+    username: ${JDBC_DATABASE_USERNAME}
+    password: ${JDBC_DATABASE_PASSWORD}
   jpa:
     properties:
       hibernate:

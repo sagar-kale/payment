@@ -1,33 +1,21 @@
 package com.sgr.domain;
 
 import javax.persistence.*;
-import java.util.Set;
 
 @Entity
-@Table(name = "role")
+@Table(name = "roles")
 public class Role {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    private int id;
     private String role;
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable
-    private Set<User> users;
 
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
-    }
-
-    public Set<User> getUsers() {
-        return users;
-    }
-
-    public void setUsers(Set<User> users) {
-        this.users = users;
     }
 
     public void setRole(String role) {
@@ -36,5 +24,13 @@ public class Role {
 
     public String getRole() {
         return role;
+    }
+
+    @Override
+    public String toString() {
+        return "Role{" +
+                "id=" + id +
+                ", role='" + role + '\'' +
+                '}';
     }
 }

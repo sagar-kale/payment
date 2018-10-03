@@ -11,12 +11,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashSet;
 import java.util.List;
 
 @Service
 public class UserServiceImpl implements UserService {
+
     private static final Logger logger = LoggerFactory.getLogger(UserController.class);
     @Autowired
     private JpaUserRepository jpaUserRepository;
@@ -25,52 +26,42 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
+    @Autowired
+    private ImageService imageService;
+
     @Override
     public void save(User user) {
-        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+
+        long count = userRoleRepository.count();
+
         Role role_user = new Role();
         role_user.setRole("user");
-        role_user.setUsers(new HashSet<User>() {{
-            add(user);
-        }});
         Role role_admin = new Role();
         role_admin.setRole("admin");
-        role_admin.setUsers(new HashSet<User>() {{
-            add(user);
-        }});
-        if (user.getFirstName().equalsIgnoreCase("sagar")) {
-            user.setRoles(new HashSet<Role>() {{
-                add(role_user);
-                add(role_admin);
-            }});
-        } else {
-            user.setRoles(new HashSet<Role>() {{
-                add(role_user);
-            }});
-        }
-        User save = jpaUserRepository.save(user);
-        for (Role role : save.getRoles()) {
-            userRoleRepository.save(role);
+        List<Role> roleList;
+
+        logger.info("Roles count :: " + count);
+        if (count == 0) {
+            roleList = new ArrayList<>();
+            roleList.add(role_user);
+            roleList.add(role_admin);
+            userRoleRepository.saveAll(roleList);
         }
 
-     /*
+        if (null != user.getPicture()) {
+            user = imageService.storeImage(user);
+        }
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-        Role role = new Role();
-        role.setRole("user");
-        if (user.getFirstName().equalsIgnoreCase("sagar"))
-            role.setRole("admin");
-        HashSet<Role> roles = new HashSet<>();
-        roles.add(role);
-        user.setRoles(roles);
 
-        HashSet<User> users = new HashSet<>();
-        users.add(user);
-        role.setUsers(users);
-
-        logger.debug("Authentication Role for user ::: " + user.getUsername());
-        logger.debug("Roles ::: " + user.getRoles());
-        userRoleRepository.save(role);
-        jpaUserRepository.save(user);*/
+        if (user.getFirstName().equalsIgnoreCase("sagar")) {
+            List<Role> roles = userRoleRepository.findAll();
+            logger.info("all roles ::: " + roles);
+            user.setRoles(roles);
+        } else {
+            Role userRole = userRoleRepository.findByRole("user");
+            user.setRoles(new ArrayList<>(Arrays.asList(userRole)));
+        }
+        jpaUserRepository.save(user);
     }
 
     @Override
@@ -87,8 +78,8 @@ public class UserServiceImpl implements UserService {
     public void createUser(User user) {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         //user.setActive(true);
-        Role userRole = userRoleRepository.findByRole("admin");
-        user.setRoles(new HashSet<Role>(Arrays.asList(userRole)));
+        //Role userRole = userRoleRepository.findByRole("admin");
+        //user.setRoles(new ArrayList<>(Arrays.asList(userRole)));
         jpaUserRepository.save(user);
     }
 
@@ -97,7 +88,7 @@ public class UserServiceImpl implements UserService {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
 //        user.setActive(true);
         Role userRole = userRoleRepository.findByRole("admin");
-        user.setRoles(new HashSet<Role>(Arrays.asList(userRole)));
+        user.setRoles(new ArrayList<>(Arrays.asList(userRole)));
         jpaUserRepository.save(user);
     }
 
@@ -108,6 +99,20 @@ public class UserServiceImpl implements UserService {
 
     public List<Role> findAllRoles() {
         return userRoleRepository.findAll();
+    }
+
+    @Override
+    public boolean updateUserActiveStatus(String username) {
+
+        User byUsername = jpaUserRepository.findByUsername(username);
+        logger.info("updating user status :::: current status:: " + byUsername.isActive());
+        if (byUsername.isActive())
+            byUsername.setActive(false);
+        else
+            byUsername.setActive(true);
+        User save = jpaUserRepository.save(byUsername);
+        logger.info("updated user status :::: current status:: " + save.isActive());
+        return true;
     }
 
 

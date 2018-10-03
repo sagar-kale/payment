@@ -1,40 +1,66 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+>
 
 
 <head>
-    <title>Admin Layout</title>
+    <title layout:title-pattern="$LAYOUT_TITLE - $CONTENT_TITLE">ADMIN Home</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--<link rel="icon" href="images/favicon.ico" type="image/ico"/>-->
 
     <!-- Bootstrap -->
     <link th:href="@{/vendors/bootstrap/dist/css/bootstrap.min.css}" rel="stylesheet"/>
     <!-- Font Awesome -->
     <link th:href="@{/vendors/font-awesome/css/font-awesome.min.css}" rel="stylesheet"/>
+
+    <!-- NProgress -->
+    <link th:href="@{/vendors/nprogress/nprogress.css}" rel="stylesheet"/>
+    <!-- iCheck -->
+    <link th:href="@{/vendors/iCheck/skins/flat/green.css}" rel="stylesheet"/>
+
+    <!-- bootstrap-progressbar -->
+    <link th:href="@{/vendors/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css}" rel="stylesheet"/>
+
+    <!-- PNotify -->
+    <link th:href="@{/vendors/pnotify/dist/pnotify.css}" rel="stylesheet"/>
+    <link th:href="@{/vendors/pnotify/dist/pnotify.buttons.css}" rel="stylesheet"/>
+    <link th:href="@{/vendors/pnotify/dist/pnotify.nonblock.css}" rel="stylesheet"/>
     <!-- Custom CSS -->
     <link rel="stylesheet" type="text/css" th:href="@{/css/custom.min.css}"/>
-
 </head>
 
-<body class="nav-md">
+<body class="nav-md footer_fixed">
 <div class="container body">
     <div class="main_container">
-        <div class="col-md-3 left_col">
+        <div class="col-md-3 left_col menu_fixed">
             <div class="left_col scroll-view">
                 <div class="navbar nav_title" style="border: 0;">
-                    <a href="index.html" class="site_title"><i class="fa fa-paw"></i> <span>Gentelella Alela!</span></a>
+                    <a href="/admin/" class="site_title"><i class="fa fa-paw"></i> <span>Admin</span></a>
                 </div>
 
                 <div class="clearfix"></div>
 
                 <!-- menu profile quick info -->
                 <div class="profile clearfix">
-                    <div class="profile_pic">
+                    <div class="profile_pic" id="common_profile_pic">
                         <img th:src="@{/images/img.jpg}" alt="..." class="img-circle profile_img">
                     </div>
+                    <div class="profile_pic" id="db_profile_pic" th:if="${#authentication.principal.profile_thumb_url}">
+                        <img th:src="@{${#authentication.principal.profile_thumb_url}}" alt="..."
+                             class="img-circle profile_img">
+                    </div>
+
                     <div class="profile_info">
                         <span>Welcome,</span>
                         <h2 th:text="${ #strings.capitalize(#authentication.principal.firstName) +' '+ #strings.capitalize(#authentication.principal.lastName)}"></h2>
+                        <!--Profile pic: <span
+                            th:text="${#authentication.getPrincipal().getProfile_thumb_url()}"></span>-->
                     </div>
                 </div>
                 <!-- /menu profile quick info -->
@@ -92,7 +118,8 @@
                     </a>
 
                     <form th:action="@{/logout}" method="post">
-                        <button data-toggle="tooltip" data-placement="top" type="submit" class="btn btn-link"><span class="glyphicon glyphicon-off" aria-hidden="true"></span>
+                        <button data-toggle="tooltip" data-placement="top" type="submit" class="btn btn-link"><span
+                                class="glyphicon glyphicon-off" aria-hidden="true"></span>
                         </button>
                     </form>
 
@@ -112,8 +139,15 @@
                     <ul class="nav navbar-nav navbar-right">
                         <li class="">
                             <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown"
-                               aria-expanded="false">
-                                <img th:src="@{/images/img.jpg}" alt="">John Doe
+                               aria-expanded="false" id="common_sec_proflle_pic">
+                                <img th:src="@{/images/img.jpg}" alt="">
+                                <span th:text="${ #strings.capitalize(#authentication.principal.firstName) +' '+ #strings.capitalize(#authentication.principal.lastName)}"></span>
+                                <span class=" fa fa-angle-down"></span>
+                            </a>
+                            <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown"
+                               aria-expanded="false" th:if="${#authentication.principal.profile_thumb_url}">
+                                <img th:src="@{${#authentication.principal.profile_thumb_url}}" alt="">
+                                <span th:text="${ #strings.capitalize(#authentication.principal.firstName) +' '+ #strings.capitalize(#authentication.principal.lastName)}"></span>
                                 <span class=" fa fa-angle-down"></span>
                             </a>
                             <ul class="dropdown-menu dropdown-usermenu pull-right">
@@ -239,7 +273,7 @@
         <!-- footer content -->
         <footer>
             <div class="pull-right">
-                Gentelella - Bootstrap Admin Template by <a href="#">Colorlib</a>
+                $copy;Copyright by sagarkale <a href="#">Sagar Kale</a>
             </div>
             <div class="clearfix"></div>
         </footer>
@@ -251,7 +285,42 @@
 <script type="text/javascript" th:src="@{/vendors/jquery/dist/jquery.min.js}"></script>
 <!-- Bootstrap -->
 <script type="text/javascript" th:src="@{/vendors/bootstrap/dist/js/bootstrap.min.js}"></script>
+
+<!-- NProgress -->
+<script th:src="@{/vendors/nprogress/nprogress.js}"></script>
+<!-- bootstrap-progressbar -->
+<script th:src="@{/vendors/iCheck/icheck.min.js}"></script>
+
+<script th:src="@{/vendors/bootstrap-progressbar/bootstrap-progressbar.min.js}"></script>
+
+<!-- PNotify -->
+<script th:src="@{/vendors/pnotify/dist/pnotify.js}"></script>
+<script th:src="@{/vendors/pnotify/dist/pnotify.buttons.js}"></script>
+<script th:src="@{/vendors/pnotify/dist/pnotify.nonblock.js}"></script>
 <!-- Custom Theme Scripts -->
-<script th:src="@{/js/app.js}"></script>
+<script th:src="@{/js/custom.js}"></script>
+
+<script th:inline="javascript">
+
+    var url = [[${#authentication.principal.profile_thumb_url}]];
+    var updated = [[${updated}]];
+    var error = [[${error}]];
+    console.log(updated)
+    if (url != null) {
+        $("#common_profile_pic").css("display", "none");
+        $("#common_sec_proflle_pic").css("display", "none");
+    }
+    if (error != null) {
+        console.error(error);
+    }
+    if (updated == true) {
+        new PNotify({
+            title: 'Success',
+            text: 'User Status Changed SuccessFully',
+            type: 'success',
+            styling: 'bootstrap3'
+        });
+    }
+</script>
 </body>
 </html>

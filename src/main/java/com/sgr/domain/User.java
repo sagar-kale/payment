@@ -1,17 +1,14 @@
 package com.sgr.domain;
 
-import org.hibernate.annotations.GenericGenerator;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
-import java.util.Set;
+import java.util.List;
 
 @Entity(name = "user_details")
 public class User {
     @Id
-    @Column(length = 40)
-    @GeneratedValue(generator = "randomId")
-    @GenericGenerator(name = "randomId", strategy = "com.sgr.domain.RandomIdGenerator")
-    private String id;
+    @Column(name = "username", unique = true)
     private String username;
     private String firstName;
     private String lastName;
@@ -19,19 +16,22 @@ public class User {
     private String password;
     @Transient
     private String passwordConfirm;
+    @Transient
+    private MultipartFile picture;
     private String phone;
-    private String role;
     private boolean active;
-    @ManyToMany(mappedBy = "users")
-    private Set<Role> roles;
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinTable(name = "user_roles",
+            joinColumns = {@JoinColumn(name = "user_name", referencedColumnName = "username")},
+            inverseJoinColumns = {@JoinColumn(name = "role_id", referencedColumnName = "id")}
+    )
+    private List<Role> roles;
+    @Column(name = "profile_pic_link")
+    private String profile_pic_link;
+    @Column(name = "profile_thumb_url")
+    private String profile_thumb_url;
+    @Column(name = "pic_public_id")
+    private String pic_public_id;
 
     public String getUsername() {
         return username;
@@ -89,14 +89,6 @@ public class User {
         this.passwordConfirm = passwordConfirm;
     }
 
-    public String getRole() {
-        return role;
-    }
-
-    public void setRole(String role) {
-        this.role = role;
-    }
-
     public boolean isActive() {
         return active;
     }
@@ -105,11 +97,62 @@ public class User {
         this.active = active;
     }
 
-    public Set<Role> getRoles() {
+    public MultipartFile getPicture() {
+        return picture;
+    }
+
+    public void setPicture(MultipartFile picture) {
+        this.picture = picture;
+    }
+
+    public String getProfile_pic_link() {
+        return profile_pic_link;
+    }
+
+    public void setProfile_pic_link(String profile_pic_link) {
+        this.profile_pic_link = profile_pic_link;
+    }
+
+    public String getProfile_thumb_url() {
+        return profile_thumb_url;
+    }
+
+    public void setProfile_thumb_url(String profile_thumb_url) {
+        this.profile_thumb_url = profile_thumb_url;
+    }
+
+    public String getPic_public_id() {
+        return pic_public_id;
+    }
+
+    public void setPic_public_id(String pic_public_id) {
+        this.pic_public_id = pic_public_id;
+    }
+
+    public List<Role> getRoles() {
         return roles;
     }
 
-    public void setRoles(Set<Role> roles) {
+    public void setRoles(List<Role> roles) {
         this.roles = roles;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "username='" + username + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", passwordConfirm='" + passwordConfirm + '\'' +
+                ", picture=" + picture +
+                ", phone='" + phone + '\'' +
+                ", active=" + active +
+                ", roles=" + roles +
+                ", profile_pic_link='" + profile_pic_link + '\'' +
+                ", profile_thumb_url='" + profile_thumb_url + '\'' +
+                ", pic_public_id='" + pic_public_id + '\'' +
+                '}';
     }
 }
