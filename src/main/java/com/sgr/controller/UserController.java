@@ -58,7 +58,7 @@ public class UserController {
     @RequestMapping(value = "/register", method = RequestMethod.POST, consumes = {MediaType.APPLICATION_FORM_URLENCODED_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
     public String registration(@Valid User user, BindingResult bindingResult, Model model) {
 
-        logger.info("Adding User " + user.getUsername());
+        logger.info("Adding User " + user.getEmail());
         logger.info("User::: " + user);
         user.setUsername(user.getEmail());
         user.setActive(true);
