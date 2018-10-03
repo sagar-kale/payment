@@ -5,6 +5,6 @@ applications:
   path : target\payment-gateways-0.1.0.jar
   instances: 1
   routes:
-      - route: sagarkale.cfapps.io
-    services:
-       - payment-db
+    - route: sagarkale.cfapps.io
+  services:
+    - payment-db
