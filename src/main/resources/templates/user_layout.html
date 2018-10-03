@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 
 <head>
     <meta charset="utf-8">
@@ -51,6 +52,11 @@
                     <li class="nav-item">
                         <a class="nav-link" href="#order" th:href="@{/order}">Order</a>
                     </li>
+                    <div sec:authorize="hasRole('ROLE_ADMIN')">
+                        <li class="nav-item">
+                            <a class="nav-link" href="#" th:href="@{/admin/}">Admin</a>
+                        </li>
+                    </div>
                     <li class="nav-item">
                         <a class="nav-link" href="#contact">Contact</a>
                     </li>
