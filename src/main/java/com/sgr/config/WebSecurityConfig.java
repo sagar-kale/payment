@@ -32,7 +32,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.antMatcher("/**")
+        http.csrf()
+                // ignore our stomp endpoints since they are protected using Stomp headers
+                .ignoringAntMatchers("/chat/**", "/ws/**", "/topic/**")
+                .and()
+                .headers()
+                // allow same origin to frame our site to support iframe SockJS
+                .frameOptions().sameOrigin()
+                .and().authorizeRequests().and()
+                .antMatcher("/**")
                 .authorizeRequests()
                 .antMatchers("/register", "/index", "/webhook", "/login")
                 .permitAll()

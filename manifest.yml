@@ -8,3 +8,5 @@ applications:
     - route: sagarkale.cfapps.io
   services:
     - payment-db
+  buildpacks:
+       - https://github.com/cloudfoundry/java-buildpack.git
