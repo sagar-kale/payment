@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org"
+      layout:decorate="~{user_layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>Payment order</title>
+    <script>
+        $(document).ready(function () {
+            // Handler for .ready() called.
+
+            $('html, body').animate({
+                scrollTop: $('#order_view').offset().top
+            }, 'slow');
+        });
+
+    </script>
+</head>
+<body>
+<section id="order_view" class="text-center" layout:fragment="content">
+    <!-- Heading -->
+    <h2 class="mb-5 font-weight-bold">Order Status</h2>
+
+    <!--Grid row-->
+    <div class="row">
+
+        <!--Grid column-->
+        <div class="col-lg-4 col-md-6 mb-4">
+
+            <div class="view overlay z-depth-1-half">
+                <h4 class="my-4 font-weight-bold">Payment Order Status</h4>
+                <p class="grey-text">Find Your Order Status</p>
+                <div class="mask rgba-white-slight"></div>
+            </div>
+
+
+        </div>
+
+        <!--Grid column-->
+        <div class="col-lg-8 col-md-12 mb-4">
+            <div class="view overlay z-depth-1-half">
+                <div class="table-wrapper-scroll-y">
+                    <table class="table table-hover table-sm grey">
+                        <!--th>ID</th>
+                        <th>Transaction Id</th>-->
+                        <!--<th>Redirect URL</th>-->
+                        <tbody class="black white-text" th:each="response : ${orderStatus}">
+                        <tr>
+                            <th>ID</th>
+                            <td class="grey" th:text="${response.id}"/>
+                        </tr>
+                        <tr>
+                            <th>Transaction ID</th>
+                            <td class="grey black-text" th:text="${response.transactionId}"/>
+                        </tr>
+                        <tr>
+                            <th>Name</th>
+                            <td class="grey black-text" th:text="${response.name}"/>
+                        </tr>
+                        <tr>
+                            <th>Email</th>
+                            <td class="grey black-text" th:text="${response.email}"/>
+                        </tr>
+                        <tr>
+                            <th>Phone</th>
+                            <td class="grey black-text" th:text="${response.phone}"/>
+                        </tr>
+                        <tr>
+                            <th>Amount</th>
+                            <td class="grey black-text" th:text="${response.amount+ ' ' + response.currency}"/>
+                        </tr>
+                        <tr>
+                            <th>Status</th>
+                            <td class="grey black-text" th:text="${response.status}"/>
+                        </tr>
+                        <tr>
+                            <th>Description</th>
+                            <td class="grey black-text" th:text="${response.description}"/>
+                        </tr>
+                        <tr>
+                            <th>Created At</th>
+                            <td class="grey black-text" th:text="${response.createdAt}"/>
+                        </tr>
+                        <tr>
+                            <th>Payment Id</th>
+                            <td class="grey black-text" th:text="${payment.id}"/>
+                        </tr>
+                        <tr>
+                            <th>Payment Status</th>
+                            <td class="grey black-text" th:text="${payment.status}"/>
+                        </tr>
+                        </tbody>
+                        <!--<tbody>
+                        <tr th:each="response : ${orderStatus}">
+                            &lt;!&ndash; <td th:text="${response.id}"/>
+                             <td th:text="${response.transactionId}"/>&ndash;&gt;
+                            &lt;!&ndash;<td th:text="${response.redirectUrl}"/>&ndash;&gt;
+                            <td th:text="${response.name}"/>
+                            <td th:text="${response.email}"/>
+                            <td th:text="${response.phone}"/>
+                            <td th:text="${response.amount+ ' ' + response.currency}"/>
+                            <td th:text="${response.status}"/>
+                        </tr>
+                        </tbody>-->
+                    </table>
+                </div>
+                <div class="mask rgba-white-slight"></div>
+            </div>
+
+        </div>
+        <!--Grid column-->
+
+    </div>
+</section>
+</body>
+</html>

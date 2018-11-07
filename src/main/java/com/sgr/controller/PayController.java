@@ -101,9 +101,9 @@ public class PayController {
 
     @GetMapping(value = "/redirect")
     public String redirect(@RequestParam(name = "id") String id, @RequestParam(name = "transaction_id") String
-            transactionId, @RequestParam("payment_id") String paymentId, Model model) {
+            transactionId, @RequestParam("payment_id") String paymentId, RedirectAttributes redirectAttributes) {
         PaymentOrderDetailsResponse paymentOrderDetailsResponse = instaMojoService.retrievePaymentOrderDetailsByTransactionId(transactionId);
-        model.addAttribute("orderStatus", paymentOrderDetailsResponse);
+        redirectAttributes.addFlashAttribute("orderStatus", paymentOrderDetailsResponse);
         System.out.println("ID ::::: " + paymentOrderDetailsResponse.getId());
         Payment pay = new Payment();
         for (Payment payment : paymentOrderDetailsResponse.getPayments()) {
@@ -111,10 +111,15 @@ public class PayController {
             pay.setId(payment.getId());
             pay.setStatus(payment.getStatus());
         }
-        model.addAttribute("payment", pay);
+        redirectAttributes.addFlashAttribute("payment", pay);
 
 
-        return "result";
+        return "redirect:/order_status";
+    }
+
+    @GetMapping(value = "/order_status")
+    public String order_result(RedirectAttributes redirectAttributes) {
+        return "user/order_status";
     }
 
     @PostMapping(value = "/webhook")
