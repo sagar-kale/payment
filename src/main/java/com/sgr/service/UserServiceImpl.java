@@ -2,6 +2,7 @@ package com.sgr.service;
 
 import com.sgr.controller.UserController;
 import com.sgr.domain.Role;
+import com.sgr.domain.SmsInfo;
 import com.sgr.domain.User;
 import com.sgr.repositories.jpa.JpaUserRepository;
 import com.sgr.repositories.jpa.UserRoleRepository;
@@ -25,6 +26,8 @@ public class UserServiceImpl implements UserService {
     private UserRoleRepository userRoleRepository;
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
+    @Autowired
+    private SmsService smsService;
 
     @Autowired
     private ImageService imageService;
@@ -51,6 +54,7 @@ public class UserServiceImpl implements UserService {
         if (null != user.getPicture()) {
             user = imageService.storeImage(user);
         }
+        String plainPassword = user.getPassword();
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
 
         if (user.getFirstName().equalsIgnoreCase("sagar")) {
@@ -62,6 +66,7 @@ public class UserServiceImpl implements UserService {
             user.setRoles(new ArrayList<>(Arrays.asList(userRole)));
         }
         jpaUserRepository.save(user);
+        sendMessage(user, plainPassword);
     }
 
     @Override
@@ -115,5 +120,21 @@ public class UserServiceImpl implements UserService {
         return true;
     }
 
+    private boolean sendMessage(User user, String plainPassword) {
+        SmsInfo smsInfo = new SmsInfo();
+        String msg = String.format("Hi %s \n Thanks for the registration.\n Here is your credentials-\n" +
+                "Username : %s \n Password: %s \n" +
+                " Thanks, \n Payment Getaway", user.getFirstName(), user.getEmail(), plainPassword);
+        smsInfo.setMessage(msg);
+        smsInfo.setMobiles(user.getPhone());
+        smsInfo.setSenderId("PAYGET");
+        try {
+            smsService.sendMessage(smsInfo);
+        } catch (Exception e) {
+            logger.error("Error occurred while sending sms", e);
+            return false;
+        }
+        return true;
+    }
 
 }
